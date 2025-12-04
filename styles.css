@@ -19,7 +19,7 @@
   --color-gray-900: #111827;
 
   /* Typographie */
---font-heading: "Poppins", sans-serif;
+  --font-heading: "Poppins", serif;
   --font-body: "Inter", sans-serif;
 
   /* Espacements */
