@@ -1,0 +1,65 @@
+Projet-Revue-Theologie-UPC/
+│
+├── css/
+│   └── styles.css
+│
+├── js/
+│   ├── main.js
+│   ├── articles.js
+│   ├── soumissions.js
+│   ├── recherche.js
+│   ├── compte-auteur.js
+│   └── admin.js
+│
+├── assets/
+│   ├── images/
+│   │   ├── logo/
+│   │   ├── auteurs/
+│   │   └── numeros/
+│   └── pdf/
+│       └── articles/
+│
+├── includes/
+│   ├── db.php
+│   ├── auth.php
+│   ├── header.php
+│   ├── footer.php
+│   ├── navbar-public.php
+│   ├── navbar-auteur.php
+│   └── navbar-admin.php
+│
+├── gestion/
+│   ├── login.php
+│   ├── logout.php
+│   ├── inscription_auteur.php
+│   ├── soumettre_article.php
+│   ├── mettre_a_jour_article.php
+│   ├── valider_article.php
+│   ├── gerer_numero.php
+│   ├── gerer_auteurs.php
+│   └── gerer_comite.php
+│
+├── pages/                           # TOUTES les pages publiques
+│   ├── index.php                    # Accueil publique
+│   ├── revue-a-propos.php
+│   ├── comite-editorial.php
+│   ├── consignes-auteurs.php
+│   ├── politique-editoriale.php
+│   ├── numeros.php
+│   ├── numero-detail.php
+│   ├── article.php
+│   └── recherche.php
+│
+├── inscription-auteur.php           # Formulaire auteur (peut aussi aller dans pages/)
+├── login.php                        # Connexion auteurs/admin
+│
+├── espace-auteur.php
+├── mes-articles.php
+├── soumettre-article.php
+├── profil-auteur.php
+│
+├── admin-dashboard.php
+├── admin-articles.php
+├── admin-numeros.php
+├── admin-auteurs.php
+└── admin-comite.php
