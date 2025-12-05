@@ -6,7 +6,7 @@ DOCUMENTATION — Site web pour la Revue de la Faculté de Théologie (Universit
 Protestante au Congo, UPC)
 1. Résumé exécutif
 La présente documentation décrit la conception, le contenu, le workflow
-éditorial, l'architecture technique et le design recommandés pour construire et
+éditosoumettre.htmlrial, l'architecture technique et le design recommandés pour construire et
 maintenir le site web officiel de la revue de la Faculté de Théologie de l’UPC.
 L’objectif est d’obtenir une plateforme professionnelle, accessible, pérenne et
 adaptée à la publication et à l’indexation des articles scientifiques en théologie.
