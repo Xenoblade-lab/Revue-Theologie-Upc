@@ -12,6 +12,11 @@
         App\App::view('comite');
     });
 
+
+    Router\Router::get('/search', function(){
+        App\App::view('search');
+    });
+
     Router\Router::get('/test', function(){
        echo "<h1>Royi suce moi la bite</h1>";
     });
