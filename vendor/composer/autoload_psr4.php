@@ -9,5 +9,6 @@ return array(
     'Whoops\\' => array($vendorDir . '/filp/whoops/src/Whoops'),
     'Router\\' => array($baseDir . '/router'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
+    'Models\\' => array($baseDir . '/models'),
     'App\\' => array($baseDir . '/app'),
 );

@@ -19,6 +19,10 @@ class ComposerStaticInitcdc540639fbf1cb4b940a9197d9773c3
         array (
             'Psr\\Log\\' => 8,
         ),
+        'M' => 
+        array (
+            'Models\\' => 7,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -37,6 +41,10 @@ class ComposerStaticInitcdc540639fbf1cb4b940a9197d9773c3
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
+        ),
+        'Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/models',
         ),
         'App\\' => 
         array (

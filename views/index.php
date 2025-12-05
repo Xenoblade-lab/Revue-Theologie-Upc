@@ -11,34 +11,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="site-header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="logo_upc.png" alt="UPC Logo">
-                    <div class="logo-text">
-                        <h1>Revue de la Faculté de Théologie</h1>
-                        <p>Université Protestante au Congo</p>
-                    </div>
-                </div>
-                <nav class="main-nav">
-                    <a href="index.html" class="active">Accueil</a>
-                    <a href="numeros.html">Numéros & Archives</a>
-                    <a href="soumettre.html">Soumettre</a>
-                    <a href="instructions.html">Instructions</a>
-                    <a href="comite.html">Comité</a>
-                    <a href="recherche.html">Recherche</a>
-                </nav>
-                <button class="btn-submit">Soumettre un article</button>
-                <button class="mobile-menu-toggle" aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
+    <?php include __DIR__ .  DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'header.php'; ?>
     <!-- Mobile Navigation -->
     <nav class="mobile-nav">
         <a href="index.html" class="active">Accueil</a>
@@ -62,8 +35,8 @@
                     Nous publions des recherches innovantes qui contribuent au dialogue théologique mondial.
                 </p>
                 <div class="hero-actions">
-                    <a href="numeros.html" class="btn btn-primary">Lire le dernier numéro</a>
-                    <a href="soumettre.html" class="btn btn-secondary">Soumettre un article</a>
+                    <a href="<?= Router\Router::route("archives") ?>" class="btn btn-primary">Lire le dernier numéro</a>
+                    <a href="<?= Router\Router::route("submit") ?>" class="btn btn-secondary">Soumettre un article</a>
                 </div>
             </div>
         </div>
