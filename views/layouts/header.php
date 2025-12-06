@@ -3,7 +3,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <img src="/assets/logo_upc.png" alt="UPC Logo">
+                    <img src="./assets/logo_upc.png" alt="UPC Logo">
                     <div class="logo-text">
                         <h1>Revue de la Faculté de Théologie</h1>
                         <p>Université Protestante au Congo</p>
@@ -17,12 +17,19 @@
                     <a href="<?= Router\Router::route('comite') ?>">Comité</a>
                     <a href="<?= Router\Router::route('search') ?>" class="active">Recherche</a>
                 </nav>
-                <button class="btn-submit">Soumettre un article</button>
+                <div class="header-actions">
+                    <button class="btn-submit">Soumettre un article</button>
+                    <a href="<?= Router\Router::route("login") ?>" class="btn btn-outline">Se connecter</a>
+                    <a href="<?= Router\Router::route("register") ?>" class="btn btn-primary">S'inscrire</a>
+                    
+                </div>
                 <button class="mobile-menu-toggle" aria-label="Menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
             </div>
+        </div>
+</header>
         </div>
 </header>
