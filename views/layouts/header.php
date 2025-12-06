@@ -3,7 +3,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <img src="logo_upc.png" alt="UPC Logo">
+                    <img src="/assets/logo_upc.png" alt="UPC Logo">
                     <div class="logo-text">
                         <h1>Revue de la Faculté de Théologie</h1>
                         <p>Université Protestante au Congo</p>

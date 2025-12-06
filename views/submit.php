@@ -255,7 +255,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script src="soumettre-script.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="./js/soumettre-script.js"></script>
 </body>
 </html>

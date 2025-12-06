@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - Revue de Théologie UPC</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="auth-styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/auth-styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -94,12 +94,12 @@
                 </div>
 
                 <div class="auth-footer">
-                    Vous avez déjà un compte ? <a href="login.html">Se connecter</a>
+                    Vous avez déjà un compte ? <a href="<?= Router\Router::route('login') ?>">Se connecter</a>
                 </div>
             </div>
 
             <div class="back-home">
-                <a href="index.html">
+                <a href="<?= Router\Router::route('') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
@@ -109,6 +109,6 @@
         </div>
     </div>
 
-    <script src="auth-script.js"></script>
+    <script src="./js/auth-script.js"></script>
 </body>
 </html>

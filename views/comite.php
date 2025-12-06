@@ -250,7 +250,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script src="comite-script.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="./js/comite-script.js"></script>
 
 </body></html>

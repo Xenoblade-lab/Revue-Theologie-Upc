@@ -16,16 +16,23 @@
         App\App::view('instructions');
     });
 
+    Router\Router::get('/login',function(){
+        App\App::view('login');
+    });
+
     Router\Router::get('/search', function(){
         App\App::view('search');
     });
 
+    Router\Router::get('/register', function(){
+        App\App::view('register');
+    });
 
     Router\Router::get('/submit', function(){
         App\App::view('submit');
     });
 
     Router\Router::get('/test', function(){
-       echo "<h1>Royi suce moi la bite</h1>";
+       echo "<h1>test</h1>";
     });
 ?>

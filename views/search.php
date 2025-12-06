@@ -151,8 +151,8 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script src="recherche-script.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="./js/recherche-script.js"></script>
 </body>
 </html>
    

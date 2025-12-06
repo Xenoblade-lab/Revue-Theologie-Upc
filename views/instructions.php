@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revue de la Faculté de Théologie – UPC</title>
-    <link rel="stylesheet" href="styles.css">
+ 
     <link rel="stylesheet" href="instructions-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- Header -->
-     <?php include __DIR__ .  DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'header.php'; ?>  
+     <?php  APP\App::view('layouts/header') ?>  
    
     <!-- Mobile Navigation -->
     <nav class="mobile-nav">
@@ -201,7 +201,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="./js/script.js"></script>
     </body>
 </html>
 
