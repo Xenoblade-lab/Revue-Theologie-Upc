@@ -10,12 +10,16 @@
                     </div>
                 </div>
                 <nav class="main-nav">
-                    <a href="<?= Router\Router::route("") ?>">Accueil</a>
-                    <a href="<?= Router\Router::route("archives") ?>">Numéros & Archives</a>
-                    <a href="<?= Router\Router::route("instructions") ?>">Instructions</a>
-                    <a href="<?= Router\Router::route('comite') ?>">Comité</a>
-                    <a href="<?= Router\Router::route("login") ?>">Se connecter</a>
-                    <a href="<?= Router\Router::route('search') ?>" class="active">Recherche</a>
+                    <a href="<?= Router\Router::route("") ?>" class=<?= App\Html::class('/') ?>>Accueil</a>
+                    <a href="<?= Router\Router::route("archives") ?>" class=<?= App\Html::class('/archives') ?>>Numéros & Archives</a>
+                    <a href="<?= Router\Router::route("instructions") ?>" class=<?= App\Html::class('/instructions') ?>>Instructions</a>
+                    <a href="<?= Router\Router::route('comite') ?>" class=<?= App\Html::class('/comite') ?>>Comité</a>
+                    <?php if(!Service\AuthService::isLoggedIn()): ?>
+                        <a href="<?= Router\Router::route("login") ?>">Se connecter</a>
+                    <?php else: ?>
+                        <a href="<?= Router\Router::route("logout") ?>">Se deconnecter</a>
+                    <?php endif; ?>
+                    <a href="<?= Router\Router::route('search') ?> " class=<?= App\Html::class('/search') ?>>Recherche</a>
                 </nav>
                 <div class="header-actions">
                     <button class="btn-submit">
