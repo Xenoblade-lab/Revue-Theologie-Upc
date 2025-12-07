@@ -53,9 +53,16 @@
           if($match && is_callable($match['target'])){
             call_user_func($match['target'],$match['params']);
           }
-         else{
+          elseif(is_array($match) && is_array($match['target'])){
+            $controller = $match['target'][0];
+            $method = $match['target'][1];
+            $controller = new $controller();
+            $controller->$method($match['params']);
+          }
+
+          else{
             self::respondNotFound();
-         }
+          }
        }
 
        private static function respondNotFound()

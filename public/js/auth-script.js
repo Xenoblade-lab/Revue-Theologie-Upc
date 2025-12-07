@@ -43,10 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Register form submission
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
-        registerForm.addEventListener('submit', function(e) {
+        registerForm.addEventListener('submit',async function(e) {
             e.preventDefault();
             
             const fullname = document.getElementById('fullname').value;
+            const prenom = document.getElementById("prenom").value;
             const email = document.getElementById('email').value;
             const institution = document.getElementById('institution').value;
             const password = document.getElementById('password').value;
@@ -75,15 +76,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Simulate registration (replace with actual API call)
+            const reponse = await fetch('http://localhost:8000/register',{
+                method:"POST",
+                body: JSON.stringify({fullname,prenom,email,institution, password, confirmPassword,terms}),
+                headers : {'Content-Type' : 'application/json'}
+            });
+
+            const sign = reponse.json();
+            console.log(sign);
             console.log('Registration attempt:', { fullname, email, institution, password });
             
             // Show success message
             showSuccess('Compte créé avec succès ! Redirection...');
             
             // Redirect to login
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 2000);
+            // setTimeout(() => {
+            //     window.location.href = 'login.html';
+            // }, 2000);
         });
     }
 

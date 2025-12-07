@@ -1,12 +1,12 @@
 <?php
-
+//  =========== GET ================
     Router\Router::get('/', function(){
         App\App::view('index');
     });
 
-    Router\Router::get('/archives', function(){
-        App\App::view('archives');
-    });
+    Router\Router::get('/archives',[\Controllers\BlogContoller::class,'index']);
+
+    Router\Router::get('/archives/[i:id]',[\Controllers\BlogContoller::class,'show']);
     
     Router\Router::get('/comite', function(){
         App\App::view('comite');
@@ -35,4 +35,13 @@
     Router\Router::get('/test', function(){
        echo "<h1>test</h1>";
     });
+    
+   // =========== POST ================
+    Router\Router::post('/login', function(){
+        $auth = new Service\AuthService();
+        $auth->login($_POST);
+    });
+
+
+
 ?>

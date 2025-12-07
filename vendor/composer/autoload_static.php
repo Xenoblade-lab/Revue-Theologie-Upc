@@ -11,6 +11,10 @@ class ComposerStaticInitcdc540639fbf1cb4b940a9197d9773c3
         array (
             'Whoops\\' => 7,
         ),
+        'S' => 
+        array (
+            'Service\\' => 8,
+        ),
         'R' => 
         array (
             'Router\\' => 7,
@@ -23,6 +27,10 @@ class ComposerStaticInitcdc540639fbf1cb4b940a9197d9773c3
         array (
             'Models\\' => 7,
         ),
+        'C' => 
+        array (
+            'Controllers\\' => 12,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -33,6 +41,10 @@ class ComposerStaticInitcdc540639fbf1cb4b940a9197d9773c3
         'Whoops\\' => 
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
+        ),
+        'Service\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/service',
         ),
         'Router\\' => 
         array (
@@ -45,6 +57,10 @@ class ComposerStaticInitcdc540639fbf1cb4b940a9197d9773c3
         'Models\\' => 
         array (
             0 => __DIR__ . '/../..' . '/models',
+        ),
+        'Controllers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/controllers',
         ),
         'App\\' => 
         array (

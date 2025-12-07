@@ -7,8 +7,10 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Whoops\\' => array($vendorDir . '/filp/whoops/src/Whoops'),
+    'Service\\' => array($baseDir . '/service'),
     'Router\\' => array($baseDir . '/router'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
     'Models\\' => array($baseDir . '/models'),
+    'Controllers\\' => array($baseDir . '/controllers'),
     'App\\' => array($baseDir . '/app'),
 );

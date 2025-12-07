@@ -26,10 +26,15 @@
                     <div class="error-message" id="error-message"></div>
                     <div class="success-message" id="success-message"></div>
                     
-                    <form class="auth-form" id="register-form">
+                    <form class="auth-form" id="register-form" method="POST" action="<?= Router\Router::route('register') ?>">
                         <div class="form-group">
                             <label for="fullname">Nom complet</label>
-                            <input type="text" id="fullname" name="fullname" placeholder="the king Mufasa" required>
+                            <input type="text" id="fullname" name="nom" placeholder="Votre nom " required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="prenom">Prénom</label>
+                            <input type="text" id="prenom" name="prenom" placeholder="Votre prenom" required>
                         </div>
 
                         <div class="form-group">
