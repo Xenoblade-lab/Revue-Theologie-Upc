@@ -13,6 +13,7 @@
     });
 
     Router\Router::get('/instructions', function(){
+        Service\AuthService::requireLogin();
         App\App::view('instructions');
     });
 
@@ -21,6 +22,7 @@
     });
 
     Router\Router::get('/search', function(){
+        Service\AuthService::requireLogin();
         App\App::view('search');
     });
 
@@ -29,6 +31,7 @@
     });
 
     Router\Router::get('/submit', function(){
+        Service\AuthService::requireLogin();
         App\App::view('submit');
     });
 

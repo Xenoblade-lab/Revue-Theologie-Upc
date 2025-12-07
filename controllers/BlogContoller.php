@@ -5,6 +5,7 @@
   class BlogContoller
   {
       public function index(){
+        \Service\AuthService::requireLogin();
         \App\App::view('archives');
       }
 

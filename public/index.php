@@ -12,11 +12,3 @@
       Router\Router::origin($origin);
       Router\Router::matcher();
 ?>
-<link rel="stylesheet" href="./css/styles.css">
-<link rel="stylesheet" href="./css/auth-styles.css">
-<link rel="stylesheet" href="./css/instructions-styles.css">
-<link rel="stylesheet" href="./css/dashboard-styles.css">
-<link rel="stylesheet" href="./css/soumettre-styles.css">
-<link rel="stylesheet" href="./css/recherche-styles.css">
-<link rel="stylesheet" href="./css/numeros-styles.css">
-<link rel="stylesheet" href="./css/comite-styles.css">

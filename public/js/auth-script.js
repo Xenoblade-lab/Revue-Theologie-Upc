@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Login form submission
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers : {'Content-Type' : 'application/json'}
             });
 
-            const sign = reponse.json();
+            const sign = await reponse.json();
             console.log(sign);
             console.log('Registration attempt:', { fullname, email, institution, password });
             
