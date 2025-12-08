@@ -18,7 +18,7 @@ class VolumeModel {
      * Créer un volume (alias revue)
      */
     public function createVolume($data) {
-        $journalModel = new JournalModel();
+        $journalModel = new JournalModel($this->db);
         return $journalModel->createJournal($data);
     }
 
@@ -26,7 +26,7 @@ class VolumeModel {
      * Récupérer un volume par ID
      */
     public function getVolumeById($id) {
-        $journalModel = new JournalModel();
+        $journalModel = new JournalModel($this->db);
         return $journalModel->getJournalById($id);
     }
 
@@ -45,7 +45,7 @@ class VolumeModel {
      * Récupérer tous les volumes
      */
     public function getAllVolumes($page = 1, $limit = 20) {
-        $journalModel = new JournalModel();
+        $journalModel = new JournalModel($this->db);
         return $journalModel->getAllJournals($page, $limit);
     }
 
@@ -53,7 +53,7 @@ class VolumeModel {
      * Récupérer les "numéros" d'un volume (les revue_parts)
      */
     public function getVolumeIssues($volumeId) {
-        $journalModel = new JournalModel();
+        $journalModel = new JournalModel($this->db);
         return $journalModel->getJournalParts($volumeId);
     }
 
@@ -61,7 +61,7 @@ class VolumeModel {
      * Ajouter un numéro à un volume
      */
     public function addIssueToVolume($volumeId, $data) {
-        $journalModel = new JournalModel();
+        $journalModel = new JournalModel($this->db);
         return $journalModel->addJournalPart($volumeId, $data);
     }
 

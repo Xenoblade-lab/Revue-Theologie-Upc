@@ -541,7 +541,7 @@ class JournalModel {
      */
     public function canUserDownloadJournal($journalId, $userId) {
         // Vérifier si l'utilisateur est abonné et actif
-        $userModel = new UserModel();
+        $userModel = new UserModel($this->db);
         $isSubscribed = $userModel->isSubscribedAndActive($userId);
         
         // Vérifier si la revue a des parties gratuites
