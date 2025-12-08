@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Auteur - Revue de Théologie UPC</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="dashboard-styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/dashboard-styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -14,7 +14,7 @@
         <aside class="dashboard-sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
-                    <img src="logo_upc.png" alt="UPC Logo">
+                    <img src="./assets/logo_upc.png" alt="UPC Logo">
                     <h2>Espace Auteur</h2>
                 </div>
                 <div class="user-info">
@@ -333,7 +333,7 @@
         </svg>
     </button>
 
-    <script src="script.js"></script>
-    <script src="dashboard-script.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="./js/dashboard-script.js"></script>
 </body>
 </html>

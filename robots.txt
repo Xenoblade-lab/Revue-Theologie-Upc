@@ -95,3 +95,13 @@ Projet-Revue-Theologie-UPC/          # Racine du projet de la revue
 ├── dash/                            # Répertoire réservé pour un futur regroupement des dashboards (actuellement vide)
 │
 └── structure du projet.txt          # Documentation de la structure du projet (ce fichier)
+
+
+<!-- <link rel="stylesheet" href="./css/styles.css">
+<link rel="stylesheet" href="./css/auth-styles.css">
+<link rel="stylesheet" href="./css/instructions-styles.css">
+<link rel="stylesheet" href="./css/dashboard-styles.css">
+<link rel="stylesheet" href="./css/soumettre-styles.css">
+<link rel="stylesheet" href="./css/recherche-styles.css">
+<link rel="stylesheet" href="./css/numeros-styles.css">
+<link rel="stylesheet" href="./css/comite-styles.css"> -->

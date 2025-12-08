@@ -1,5 +1,5 @@
  <!-- Header -->
-<header class="site-header">
+ <header class="site-header">
         <div class="container">
             <div class="header-content">
                 <div class="logo">
@@ -10,18 +10,20 @@
                     </div>
                 </div>
                 <nav class="main-nav">
-                    <a href="<?= Router\Router::route("") ?>">Accueil</a>
-                    <a href="<?= Router\Router::route("archives") ?>">Numéros & Archives</a>
-                    <a href="<?= Router\Router::route("submit") ?>">Soumettre</a>
-                    <a href="<?= Router\Router::route("instructions") ?>">Instructions</a>
-                    <a href="<?= Router\Router::route('comite') ?>">Comité</a>
-                    <a href="<?= Router\Router::route('search') ?>" class="active">Recherche</a>
+                    <a href="<?= Router\Router::route("") ?>" class=<?= App\Html::class('/') ?>>Accueil</a>
+                    <a href="<?= Router\Router::route("archives") ?>" class=<?= App\Html::class('/archives') ?>>Numéros & Archives</a>
+                    <a href="<?= Router\Router::route("instructions") ?>" class=<?= App\Html::class('/instructions') ?>>Instructions</a>
+                    <a href="<?= Router\Router::route('comite') ?>" class=<?= App\Html::class('/comite') ?>>Comité</a>
+                    <?php if(!Service\AuthService::isLoggedIn()): ?>
+                        <a href="<?= Router\Router::route("login") ?>">Se connecter</a>
+                    <?php else: ?>
+                        <a href="<?= Router\Router::route("logout") ?>">Se deconnecter</a>
+                    <?php endif; ?>
+                    <a href="<?= Router\Router::route('search') ?> " class=<?= App\Html::class('/search') ?>>Recherche</a>
                 </nav>
                 <div class="header-actions">
-                    <button class="btn-submit">Soumettre un article</button>
-                    <a href="<?= Router\Router::route("login") ?>" class="btn btn-outline">Se connecter</a>
-                    <a href="<?= Router\Router::route("register") ?>" class="btn btn-primary">S'inscrire</a>
-                    
+                    <button class="btn-submit">
+                     <a href="<?= Router\Router::route("submit") ?>">Soumettre un article</a></button>
                 </div>
                 <button class="mobile-menu-toggle" aria-label="Menu">
                     <span></span>
@@ -29,7 +31,5 @@
                     <span></span>
                 </button>
             </div>
-        </div>
-</header>
         </div>
 </header>

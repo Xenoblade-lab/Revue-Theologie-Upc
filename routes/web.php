@@ -1,5 +1,7 @@
 <?php
 //  =========== GET ================
+
+
     Router\Router::get('/', function(){
         App\App::view('index');
     });
@@ -13,6 +15,7 @@
     });
 
     Router\Router::get('/instructions', function(){
+        Service\AuthService::requireLogin();
         App\App::view('instructions');
     });
 
@@ -21,6 +24,7 @@
     });
 
     Router\Router::get('/search', function(){
+        Service\AuthService::requireLogin();
         App\App::view('search');
     });
 
@@ -29,11 +33,20 @@
     });
 
     Router\Router::get('/submit', function(){
+        Service\AuthService::requireLogin();
         App\App::view('submit');
     });
 
     Router\Router::get('/test', function(){
-       echo "<h1>test</h1>";
+        
+        var_dump(App\Html::class('/test'));
+    });
+
+    Router\Router::get('/admin', function(){
+        App\App::view('admin' . DIRECTORY_SEPARATOR . 'index');
+    });
+    Router\Router::get('/author', function(){
+        App\App::view('author' . DIRECTORY_SEPARATOR . 'index');
     });
     
    // =========== POST ================
