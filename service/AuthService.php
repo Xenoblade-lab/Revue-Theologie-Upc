@@ -1,5 +1,4 @@
 <?php 
- 
   namespace Service;
 
   use Controllers\Controller;
@@ -19,10 +18,13 @@
 
      // Validation des longueurs
       if (
-          !$this->valideLength($datas['mails'], 6, 64) ||
-          !$this->valideLength($datas['mdps'], 6, 64)  ||
+          !$this->valideLength($datas['nom'], 6, 64) ||
+          !$this->valideLength($datas['prenom'], 6, 64) ||
+          !$this->valideLength($datas['institution'], 6, 64) ||
+          !$this->valideLength($datas['email'], 6, 64) ||
+          !$this->valideLength($datas['password'], 6, 64)  ||
           !$this->valideLength($datas['phone'], 6, 64)  ||
-          !$this->valideLength($datas['confirm'], 6, 64) 
+          !$this->valideLength($datas['confirm-password'], 6, 64) 
       ) {
           $this->jsonResponse([
               'status' => 400,
@@ -47,7 +49,7 @@
     //      }
     //  }
 
-     if(!$this->isEqual($datas['mdps'],$datas['confirm']))
+     if(!$this->isEqual($datas['password'],$datas['confirm-password']))
      {
         $this->jsonResponse([
             'status' => '409',
@@ -70,7 +72,7 @@
   
     // Si tout est valide, tu peux continuer ici (ex: insertion en base)
   
-     $user->createUser($user,$datas['phone'],$datas['mails'],password_hash($datas['mdps'],PASSWORD_DEFAULT) ,3,'');
+     $user->createUser($user,$datas['nom'],$datas['prenom'],$datas['institution'],$datas['email'],password_hash($datas['password'],PASSWORD_DEFAULT) ,3,'');
 
      $this->jsonResponse([
          'status' => 200,
@@ -78,7 +80,7 @@
          'redirect' => 'index.php?p=connexion'
      ]);
 
-    //  header("Location: index.php?p=connexion");
+     header("Location: ".\Router\Router::route('login'));
      return;
     }
     
@@ -96,8 +98,8 @@
         }
 
        if(
-          !$this->valideLength($datas['mails']) ||
-          !$this->valideLength($datas['mdps'])
+          !$this->valideLength($datas['email']) ||
+          !$this->valideLength($datas['password'])
         ) {
           $this->jsonResponse([
               'status' => 400,
@@ -120,7 +122,7 @@
         //       return;
         //   } 
         // }
-        $user = $user->getUserByEmail($datas['mails']);
+        $user = $user->getUserByEmail($datas['email']);
         
         if ($user) {
 
