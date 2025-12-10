@@ -280,14 +280,14 @@ Router\Router::post('/reviews/[i:id]/decline', function ($params) {
 });
 
 // =========== POST ================
-Router\Router::post('/login', function () {
-    $auth = new Service\AuthService();
-    $auth->login($_POST);
-});
+// Router\Router::post('/login', function () {
+//     $auth = new Service\AuthService();
+//     $auth->login($_POST);
+// });
 
-Router\Router::post('/register', function () {
-    $auth = new Service\AuthService();
-    $auth->sign($_POST);
-});
+// Router\Router::post('/register', function () {
+//     $auth = new Service\AuthService();
+//     $auth->sign($_POST);
+// });
 
 ?>

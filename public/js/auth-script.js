@@ -83,11 +83,15 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             const sign = await reponse.json();
-            console.log(sign);
+            console.log(sign.status);
+            if(sign.status == 200){
+               showSuccess('Compte créé avec succès ! Redirection...');
+            }
+              
             console.log('Registration attempt:', { fullname, email, institution, password });
             
             // Show success message
-            showSuccess('Compte créé avec succès ! Redirection...');
+            showError(sign.message);
             
             // Redirect to login
             // setTimeout(() => {

@@ -17,21 +17,19 @@
       }
 
      // Validation des longueurs
-      if (
-          !$this->valideLength($datas['nom'], 6, 64) ||
-          !$this->valideLength($datas['prenom'], 6, 64) ||
-          !$this->valideLength($datas['institution'], 6, 64) ||
-          !$this->valideLength($datas['email'], 6, 64) ||
-          !$this->valideLength($datas['password'], 6, 64)  ||
-          !$this->valideLength($datas['phone'], 6, 64)  ||
-          !$this->valideLength($datas['confirm-password'], 6, 64) 
-      ) {
-          $this->jsonResponse([
-              'status' => 400,
-              'message' => 'Longueur incorrecte'
-          ]);
-          return;
-      }
+    //   if (
+    //       !$this->valideLength($datas['fullname'], 6, 64) ||
+    //       !$this->valideLength($datas['prenom'], 6, 64) ||
+    //       !$this->valideLength($datas['institution'], 6, 64) ||
+    //       !$this->valideLength($datas['email'], 6, 64) ||
+    //       !$this->valideLength($datas['password'], 6, 64)  
+    //   ) {
+    //       $this->jsonResponse([
+    //           'status' => 400,
+    //           'message' => 'Longueur incorrecte'
+    //       ]);
+    //       return;
+    //   }
 
       // Validation des formats
     //   $validators = [
@@ -49,7 +47,7 @@
     //      }
     //  }
 
-     if(!$this->isEqual($datas['password'],$datas['confirm-password']))
+     if(!$this->isEqual($datas['password'],$datas['confirmPassword']))
      {
         $this->jsonResponse([
             'status' => '409',

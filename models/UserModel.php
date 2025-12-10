@@ -16,7 +16,7 @@ class UserModel {
                 VALUES (:nom, :prenom, :email, :password, :statut, NOW(), NOW())";
         
         $params = [
-            ':nom' => $data['nom'],
+            ':nom' => $data['fullname'],
             ':prenom' => $data['prenom'],
             ':email' => $data['email'],
             ':password' => $data['password'],
