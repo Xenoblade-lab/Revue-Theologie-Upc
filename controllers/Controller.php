@@ -3,7 +3,7 @@ namespace Controllers;
 
 use Models\Database;
 
-class Controller
+class Controller extends \App\App
 {
     protected function matcherString(string $string, $match): bool
     {
@@ -67,6 +67,10 @@ class Controller
         http_response_code($status);
         header('Content-Type: application/json');
         echo json_encode($payload);
+    }
+    public function isEqual($string1, $string2): bool
+    {
+        return $string1 === $string2;
     }
 }
 ?>

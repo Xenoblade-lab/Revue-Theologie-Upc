@@ -285,4 +285,9 @@ Router\Router::post('/login', function () {
     $auth->login($_POST);
 });
 
+Router\Router::post('/register', function () {
+    $auth = new Service\AuthService();
+    $auth->sign($_POST);
+});
+
 ?>
