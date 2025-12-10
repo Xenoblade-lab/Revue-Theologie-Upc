@@ -69,8 +69,16 @@
 
   
     // Si tout est valide, tu peux continuer ici (ex: insertion en base)
-  
-     $user->createUser($user,$datas['nom'],$datas['prenom'],$datas['institution'],$datas['email'],password_hash($datas['password'],PASSWORD_DEFAULT) ,3,'');
+    $datas = [
+        'nom' => $datas['fullname'],
+        'prenom' => $datas['prenom'],
+        'institution' => $datas['institution'],
+        'email' => $datas['email'],
+        'password' => $datas['password'],
+        'confirmPassword' => $datas['confirmPassword'],
+        'terms' => $datas['terms']
+    ];
+     $user->createUser($datas);
 
      $this->jsonResponse([
          'status' => 200,

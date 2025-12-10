@@ -11,12 +11,12 @@ class UserModel {
     /**
      * Créer un nouvel utilisateur
      */
-    public function createUser(...$data) {
+    public function createUser($data) {
         $sql = "INSERT INTO users (nom, prenom, email, password, statut, created_at, updated_at) 
                 VALUES (:nom, :prenom, :email, :password, :statut, NOW(), NOW())";
         
         $params = [
-            ':nom' => $data['fullname'],
+            ':nom' => $data['nom'],
             ':prenom' => $data['prenom'],
             ':email' => $data['email'],
             ':password' => $data['password'],
