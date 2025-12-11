@@ -10,18 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <?php include __DIR__ .  DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'header.php'; ?>
-    <!-- Mobile Navigation -->
-    <nav class="mobile-nav">
-        <a href="index.html" class="active">Accueil</a>
-        <a href="numeros.html">Numéros & Archives</a>
-        <a href="soumettre.html">Soumettre</a>
-        <a href="instructions.html">Instructions</a>
-        <a href="comite.html">Comité</a>
-        <a href="recherche.html">Recherche</a>
-        <a href="soumettre.html" class="btn btn-primary btn-submit-mobile">Soumettre un article</a>
-    </nav>
+    <!-- Header standard -->
+    <?php include __DIR__ . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'header.php'; ?>
 
     <!-- Hero Section -->
     <section class="hero">
