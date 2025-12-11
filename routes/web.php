@@ -86,6 +86,10 @@ Router\Router::get('/author', [\Controllers\AuthorController::class, 'index']);
 Router\Router::get('/author/articles', [\Controllers\AuthorController::class, 'articles']);
 Router\Router::get('/author/abonnement', [\Controllers\AuthorController::class, 'abonnement']);
 Router\Router::get('/author/profil', [\Controllers\AuthorController::class, 'profil']);
+Router\Router::get('/author/article/[i:id]', [\Controllers\AuthorController::class, 'articleDetails']);
+Router\Router::get('/author/article/[i:id]/edit', [\Controllers\AuthorController::class, 'articleEdit']);
+Router\Router::post('/author/article/[i:id]/update', [\Controllers\AuthorController::class, 'articleUpdate']);
+Router\Router::post('/author/article/[i:id]/delete', [\Controllers\AuthorController::class, 'articleDelete']);
 
 // ======== Routes ArticleModel ========
 Router\Router::get('/articles', function () {
