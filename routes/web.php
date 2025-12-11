@@ -76,14 +76,13 @@ Router\Router::get('/submit', function () {
 
 Router\Router::get('/test', function () {
 
-    var_dump(App\Html::class('/test'));
 });
 
 Router\Router::get('/admin', function () {
     App\App::view('admin' . DIRECTORY_SEPARATOR . 'index');
 });
 Router\Router::get('/author', function () {
-    Service\AuthService::requireLogin();
+    // Service\AuthService::requireLogin();
     App\App::view('author' . DIRECTORY_SEPARATOR . 'index');
 });
 
@@ -93,7 +92,7 @@ Router\Router::get('/articles', function () {
     $model = new ArticleModel($db);
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 20;
-    respond($model->getAllArticles($page, $limit));
+    respond($model->all());
 });
 
 Router\Router::get('/articles/[i:id]', function ($params) {
@@ -104,11 +103,8 @@ Router\Router::get('/articles/[i:id]', function ($params) {
 });
 
 Router\Router::post('/articles', function () {
-    $db = getDb();
-    $model = new ArticleModel($db);
-    $data = $_POST;
-    $id = $model->createArticle($data);
-    // respond(['id' => $id], 201);
+    $model = new \Controllers\ArticleController();
+    $model->store($_POST);
 });
 
 Router\Router::post('/articles/[i:id]/update', function ($params) {
@@ -147,7 +143,7 @@ Router\Router::post('/revues', function () {
     $model = new VolumeModel($db);
     $data = input();
     $id = $model->createVolume($data);
-    respond(['id' => $id], 201);
+    // respond(['id' => $id], 201);
 });
 
 Router\Router::post('/revues/[i:id]/update', function ($params) {

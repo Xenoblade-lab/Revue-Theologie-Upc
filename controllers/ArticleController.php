@@ -5,26 +5,22 @@ namespace Controllers;
 use Models\ArticleModel;
 
 class ArticleController extends Controller
-{
+{   #good
     public function index()
     {
-        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-        $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 20;
-
         $model = new ArticleModel($this->db());
-        $this->respond($model->getAllArticles($page, $limit));
+        return $model->all();
     }
-
+    #good
     public function show(array $params)
     {
         $model = new ArticleModel($this->db());
         $article = $model->getArticleById($params['id'] ?? 0);
-        $article ? $this->respond($article) : $this->respond(['message' => 'Article introuvable'], 404);
+        return $article;
     }
 
-    public function store()
+    public function store($data = [])
     {
-        $data = $this->input();
         $model = new ArticleModel($this->db());
         $id = $model->createArticle($data);
         $this->respond(['id' => $id], 201);

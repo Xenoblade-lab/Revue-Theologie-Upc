@@ -107,25 +107,17 @@ class ArticleModel {
     /**
      * Récupérer tous les articles avec pagination
      */
-    public function getAllArticles($page = 1, $limit = 20, $orderBy = 'date_soumission', $order = 'DESC') {
-        $offset = ($page - 1) * $limit;
-        
-        $validOrders = ['date_soumission', 'created_at', 'titre', 'statut'];
-        $orderBy = in_array($orderBy, $validOrders) ? $orderBy : 'date_soumission';
-        $order = strtoupper($order) === 'ASC' ? 'ASC' : 'DESC';
-        
+    public function all() {
+       
+     
         $sql = "SELECT a.*, 
                        u.nom as auteur_nom, 
                        u.prenom as auteur_prenom 
                 FROM articles a 
                 LEFT JOIN users u ON a.auteur_id = u.id 
-                ORDER BY a.$orderBy $order 
-                LIMIT :limit OFFSET :offset";
+                ORDER BY a.date_soumission ASC";
         
-        return $this->db->fetchAll($sql, [
-            ':limit' => $limit,
-            ':offset' => $offset
-        ]);
+        return $this->db->fetchAll($sql);
     }
 
     /**

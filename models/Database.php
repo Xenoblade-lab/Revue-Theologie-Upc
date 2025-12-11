@@ -50,42 +50,46 @@ class Database {
     /**
      * Exécuter une requête avec paramètres (SELECT, INSERT, UPDATE, DELETE)
      */
-    // public function query($sql, $params = []) {
-    //     $stmt = $this->conn->prepare($sql);
-    //     $stmt->execute($params);
-    //     return $stmt;
-    // }
+    public function query($sql, $params = []) {
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+        return $stmt;
+    }
 
     // /**
     //  * Récupérer plusieurs enregistrements
     //  */
-    // public function fetchAll($sql, $params = []) {
-    //     $stmt = $this->query($sql, $params);
-    //     return $stmt->fetchAll();
-    // }
+    #good
+    public function fetchAll($sql, $params = []) {
+        $stmt = $this->query($sql, $params);
+        return $stmt->fetchAll();
+    }
 
     // /**
     //  * Récupérer un seul enregistrement
     //  */
-    // public function fetchOne($sql, $params = []) {
+    #good
+    public function fetchOne($sql, $params = []) {
        
-    //     $stmt = $this->query($sql, $params);
-    //     return $stmt->fetch();
-    // }
+        $stmt = $this->query($sql, $params);
+        return $stmt->fetch();
+    }
 
-    // /**
-    //  * Exécuter une requête INSERT/UPDATE/DELETE
-    //  */
-    // public function execute($sql, $params = []) {
-    //     $stmt = $this->conn->prepare($sql);
-    //     return $stmt->execute($params);
-    // }
+    /**
+     * Exécuter une requête INSERT/UPDATE/DELETE
+     */
+    #good
+    public function execute($sql, $params = []) {
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($params);
+    }
 
-    // /**
-    //  * Récupérer le dernier ID inséré
-    //  */
-    // public function lastInsertId() {
-    //     return $this->conn->lastInsertId();
-    // }
+    /**
+     * Récupérer le dernier ID inséré
+     */
+    #good
+    public function lastInsertId() {
+        return $this->conn->lastInsertId();
+    }
 }
 ?>

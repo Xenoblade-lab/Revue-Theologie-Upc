@@ -10,7 +10,7 @@
 </head>
 <body>
     <!-- Header -->
-    <?php include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'header.php'; ?>
+
     
     <div class="dashboard-layout">
         <!-- Sidebar -->
