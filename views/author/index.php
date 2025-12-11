@@ -14,13 +14,19 @@
         <aside class="dashboard-sidebar" id="sidebar">
             <nav class="sidebar-nav">
                 <div class="user-panel user-dropdown">
+                    <?php
+                    // Récupérer les données utilisateur depuis les variables passées par le contrôleur
+                    $userName = isset($user) ? trim(($user['prenom'] ?? '') . ' ' . ($user['nom'] ?? '')) : 'Utilisateur';
+                    $userEmail = isset($user) ? ($user['email'] ?? '') : '';
+                    $userInitials = isset($user) ? strtoupper(substr($user['prenom'] ?? '', 0, 1) . substr($user['nom'] ?? '', 0, 1)) : 'U';
+                    ?>
                     <button class="user-btn" id="userBtn" aria-label="Menu utilisateur">
                         <div class="user-avatar">
-                            JN
+                            <?= htmlspecialchars($userInitials) ?>
                         </div>
                         <div class="user-details">
-                            <h3>Dr. Jean Nkulu</h3>
-                            <p>nathymwamba@gmail.com</p>
+                            <h3><?= htmlspecialchars($userName) ?></h3>
+                            <p><?= htmlspecialchars($userEmail) ?></p>
                         </div>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="6 9 12 15 18 9"></polyline>
@@ -28,10 +34,10 @@
                     </button>
                     <div class="user-menu" id="userMenu">
                         <div class="user-info">
-                            <div class="user-avatar-large">JN</div>
+                            <div class="user-avatar-large"><?= htmlspecialchars($userInitials) ?></div>
                             <div class="user-details">
-                                <div class="user-name-full">Dr. Jean Nkulu</div>
-                                <div class="user-email">nathymwamba@gmail.com</div>
+                                <div class="user-name-full"><?= htmlspecialchars($userName) ?></div>
+                                <div class="user-email"><?= htmlspecialchars($userEmail) ?></div>
                             </div>
                         </div>
                         <div class="user-menu-divider"></div>
@@ -87,47 +93,51 @@
 
                 <div class="nav-section">
                     <div class="nav-section-title">Mes articles</div>
-                    <div class="nav-item">
+                    <a href="<?= Router\Router::route("author") ?>#submit-form" class="nav-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
                         <span>Nouvelle soumission</span>
-                    </div>
-                    <div class="nav-item">
+                    </a>
+                    <a href="<?= Router\Router::route("author") ?>#submissions-table" class="nav-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         <span>Mes soumissions</span>
-                        <span class="badge">3</span>
-                    </div>
-                    <div class="nav-item">
+                        <?php if (isset($stats) && isset($stats['total'])): ?>
+                            <span class="badge"><?= $stats['total'] ?></span>
+                        <?php else: ?>
+                            <span class="badge">0</span>
+                        <?php endif; ?>
+                    </a>
+                    <a href="<?= Router\Router::route("author") ?>/articles" class="nav-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span>Articles publiés</span>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="nav-section">
                     <div class="nav-section-title">Compte</div>
-                    <div class="nav-item">
+                    <a href="<?= Router\Router::route("author") ?>/abonnement" class="nav-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                         </svg>
                         <span>Abonnement & Paiements</span>
-                    </div>
-                    <div class="nav-item">
+                    </a>
+                    <a href="<?= Router\Router::route("author") ?>/profil" class="nav-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                         <span>Mon profil</span>
-                    </div>
-                    <div class="nav-item">
+                    </a>
+                    <a href="<?= Router\Router::route("logout") ?>" class="nav-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
                         <span>Déconnexion</span>
-                    </div>
+                    </a>
                 </div>
             </nav>
         </aside>
@@ -161,7 +171,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-value"><?= isset($stats) ? $stats['total'] : 0 ?></div>
                     <div class="stat-label">Articles soumis</div>
                 </div>
 
@@ -173,7 +183,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="stat-value">1</div>
+                    <div class="stat-value"><?= isset($stats) ? $stats['en_evaluation'] : 0 ?></div>
                     <div class="stat-label">En évaluation</div>
                 </div>
 
@@ -185,7 +195,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-value"><?= isset($stats) ? $stats['publie'] : 0 ?></div>
                     <div class="stat-label">Publiés</div>
                 </div>
 
@@ -203,7 +213,7 @@
             </div>
 
             <!-- Submissions Table -->
-            <div class="content-card fade-up" style="margin-bottom: var(--spacing-xl);">
+            <div class="content-card fade-up" style="margin-bottom: var(--spacing-xl);" id="submissions-table">
                 <div class="card-header">
                     <h2>Historique des soumissions</h2>
                 </div>
@@ -218,90 +228,82 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>La pneumatologie africaine : une réflexion trinitaire</td>
-                            <td>15 Jan 2025</td>
-                            <td><span class="status-badge in-review">En évaluation</span></td>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem;">
-                                    <span style="color: #10b981;">✓ Reçu</span>
-                                    <span>→</span>
-                                    <span style="color: #2563eb; font-weight: 600;">● En évaluation</span>
-                                    <span>→</span>
-                                    <span style="color: #9ca3af;">○ Révisions</span>
-                                    <span>→</span>
-                                    <span style="color: #9ca3af;">○ Accepté</span>
-                                    <span>→</span>
-                                    <span style="color: #9ca3af;">○ Publié</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn view" title="Voir les détails">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Herméneutique décoloniale et lecture africaine de l'Exode</td>
-                            <td>10 Déc 2024</td>
-                            <td><span class="status-badge published">Publié</span></td>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem;">
-                                    <span style="color: #10b981;">✓ Reçu</span>
-                                    <span>→</span>
-                                    <span style="color: #10b981;">✓ En évaluation</span>
-                                    <span>→</span>
-                                    <span style="color: #10b981;">✓ Révisions</span>
-                                    <span>→</span>
-                                    <span style="color: #10b981;">✓ Accepté</span>
-                                    <span>→</span>
-                                    <span style="color: #7c3aed; font-weight: 600;">● Publié</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn view" title="Voir l'article">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Justice environnementale et responsabilité écologique</td>
-                            <td>5 Nov 2024</td>
-                            <td><span class="status-badge accepted">Accepté</span></td>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem;">
-                                    <span style="color: #10b981;">✓ Reçu</span>
-                                    <span>→</span>
-                                    <span style="color: #10b981;">✓ En évaluation</span>
-                                    <span>→</span>
-                                    <span style="color: #10b981;">✓ Révisions</span>
-                                    <span>→</span>
-                                    <span style="color: #059669; font-weight: 600;">● Accepté</span>
-                                    <span>→</span>
-                                    <span style="color: #9ca3af;">○ Publié</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn view" title="Voir les détails">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        <?php if (isset($articles) && !empty($articles)): ?>
+                            <?php foreach ($articles as $article): ?>
+                                <?php
+                                $statut = strtolower($article['statut'] ?? 'soumis');
+                                $statutClass = 'soumis';
+                                if (strpos($statut, 'évaluation') !== false || strpos($statut, 'evaluation') !== false) {
+                                    $statutClass = 'in-review';
+                                } elseif (strpos($statut, 'accept') !== false) {
+                                    $statutClass = 'accepted';
+                                } elseif (strpos($statut, 'publi') !== false || strpos($statut, 'publish') !== false) {
+                                    $statutClass = 'published';
+                                } elseif (strpos($statut, 'rejet') !== false || strpos($statut, 'reject') !== false) {
+                                    $statutClass = 'rejected';
+                                }
+                                
+                                $dateFormatted = date('d M Y', strtotime($article['date_soumission']));
+                                ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($article['titre']) ?></td>
+                                    <td><?= $dateFormatted ?></td>
+                                    <td><span class="status-badge <?= $statutClass ?>"><?= htmlspecialchars($article['statut_display']) ?></span></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem;">
+                                            <span style="color: #10b981;">✓ Reçu</span>
+                                            <span>→</span>
+                                            <?php if ($statutClass === 'in-review'): ?>
+                                                <span style="color: #2563eb; font-weight: 600;">● En évaluation</span>
+                                                <span>→</span>
+                                                <span style="color: #9ca3af;">○ Révisions</span>
+                                                <span>→</span>
+                                                <span style="color: #9ca3af;">○ Accepté</span>
+                                                <span>→</span>
+                                                <span style="color: #9ca3af;">○ Publié</span>
+                                            <?php elseif ($statutClass === 'accepted'): ?>
+                                                <span style="color: #10b981;">✓ En évaluation</span>
+                                                <span>→</span>
+                                                <span style="color: #10b981;">✓ Révisions</span>
+                                                <span>→</span>
+                                                <span style="color: #059669; font-weight: 600;">● Accepté</span>
+                                                <span>→</span>
+                                                <span style="color: #9ca3af;">○ Publié</span>
+                                            <?php elseif ($statutClass === 'published'): ?>
+                                                <span style="color: #10b981;">✓ Reçu</span>
+                                                <span>→</span>
+                                                <span style="color: #10b981;">✓ En évaluation</span>
+                                                <span>→</span>
+                                                <span style="color: #10b981;">✓ Révisions</span>
+                                                <span>→</span>
+                                                <span style="color: #10b981;">✓ Accepté</span>
+                                                <span>→</span>
+                                                <span style="color: #7c3aed; font-weight: 600;">● Publié</span>
+                                            <?php else: ?>
+                                                <span style="color: #2563eb; font-weight: 600;">● <?= htmlspecialchars($article['statut_display']) ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view" title="Voir les détails" onclick="window.location.href='<?= Router\Router::route('articles') ?>/<?= $article['id'] ?>'">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 2rem;">
+                                    <p>Aucun article soumis pour le moment.</p>
+                                    <a href="#submit-form" class="btn btn-primary" style="margin-top: 1rem;">Soumettre votre premier article</a>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -311,7 +313,8 @@
                 <div class="card-header">
                     <h2>Soumettre un nouvel article</h2>
                 </div>
-                <form class="auth-form" method="post" action="<?= Router\Router::route('articles') ?>">
+                <form class="auth-form" method="post" action="<?= Router\Router::route('articles') ?>" enctype="multipart/form-data">
+                    <input type="hidden" name="auteur_id" value="<?= isset($user) ? $user['id'] : '' ?>">
                     <div class="form-section">
                         <h3>Informations de l'article</h3>
                         <div class="form-field">
@@ -321,7 +324,7 @@
                         <div class="form-row">
                             <div class="form-field">
                                 <label>Catégorie *</label>
-                                <select required>
+                                <select name="categorie" required>
                                     <option value="">Sélectionnez une catégorie</option>
                                     <option value="systematic">Théologie Systématique</option>
                                     <option value="biblical">Études Bibliques</option>
@@ -332,7 +335,7 @@
                             </div>
                             <div class="form-field">
                                 <label>Type de publication *</label>
-                                <select required>
+                                <select name="type_publication" required>
                                     <option value="">Sélectionnez un type</option>
                                     <option value="article">Article de recherche</option>
                                     <option value="note">Note de recherche</option>
@@ -342,11 +345,11 @@
                         </div>
                         <div class="form-field">
                             <label>Résumé (250 mots max) *</label>
-                            <textarea placeholder="Résumé de votre article en français" required></textarea>
+                            <textarea name="contenu" placeholder="Résumé de votre article en français" required></textarea>
                         </div>
                         <div class="form-field">
                             <label>Mots-clés (5-7 mots) *</label>
-                            <input type="text" placeholder="Séparés par des virgules" required>
+                            <input type="text" name="mots_cles" placeholder="Séparés par des virgules" required>
                         </div>
                     </div>
 
