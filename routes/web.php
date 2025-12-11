@@ -83,6 +83,7 @@ Router\Router::get('/admin', function () {
     App\App::view('admin' . DIRECTORY_SEPARATOR . 'index');
 });
 Router\Router::get('/author', function () {
+    Service\AuthService::requireLogin();
     App\App::view('author' . DIRECTORY_SEPARATOR . 'index');
 });
 
@@ -105,9 +106,9 @@ Router\Router::get('/articles/[i:id]', function ($params) {
 Router\Router::post('/articles', function () {
     $db = getDb();
     $model = new ArticleModel($db);
-    $data = input();
+    $data = $_POST;
     $id = $model->createArticle($data);
-    respond(['id' => $id], 201);
+    // respond(['id' => $id], 201);
 });
 
 Router\Router::post('/articles/[i:id]/update', function ($params) {
@@ -280,14 +281,14 @@ Router\Router::post('/reviews/[i:id]/decline', function ($params) {
 });
 
 // =========== POST ================
-// Router\Router::post('/login', function () {
-//     $auth = new Service\AuthService();
-//     $auth->login($_POST);
-// });
+Router\Router::post('/login', function () {
+    $auth = new Service\AuthService();
+    $auth->login($_POST);
+});
 
-// Router\Router::post('/register', function () {
-//     $auth = new Service\AuthService();
-//     $auth->sign($_POST);
-// });
+Router\Router::post('/register', function () {
+    $auth = new Service\AuthService();
+    $auth->sign($_POST);
+});
 
 ?>

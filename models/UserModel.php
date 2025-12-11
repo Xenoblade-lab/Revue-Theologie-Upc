@@ -11,9 +11,7 @@ class UserModel {
     /**
      * Créer un nouvel utilisateur
      */
-    public function createUser($data) {
-        var_dump($data);
-        die;
+    public function createUser(...$data) {
         $sql = "INSERT INTO users (nom, prenom, email, password, statut, created_at, updated_at) 
                 VALUES (:nom, :prenom, :email, :password, :statut, NOW(), NOW())";
         

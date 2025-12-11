@@ -129,7 +129,7 @@
         </div>
     </section>
 
-    <!-- Submission Form -->
+    <!-- Submission Form
     <section class="submission-form-section">
         <div class="container">
             <div class="form-container fade-up">
@@ -206,7 +206,7 @@
                 </form>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -256,6 +256,6 @@
     </footer>
 
     <script src="./js/script.js"></script>
-    <script src="./js/soumettre-script.js"></script>
+    <!-- <script src="./js/soumettre-script.js"></script> -->
 </body>
 </html>
