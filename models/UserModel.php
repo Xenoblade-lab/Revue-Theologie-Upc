@@ -82,15 +82,12 @@ class UserModel {
     /**
      * Récupérer tous les utilisateurs avec pagination
      */
-    public function getAllUsers($page = 1, $limit = 20) {
-        $offset = ($page - 1) * $limit;
+    public function all() {
+       
         
-        $sql = "SELECT * FROM users ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+        $sql = "SELECT * FROM users ORDER BY created_at ASC";
         
-        return $this->db->fetchAll($sql, [
-            ':limit' => $limit,
-            ':offset' => $offset
-        ]);
+        return $this->db->fetchAll($sql);
     }
 
     /**

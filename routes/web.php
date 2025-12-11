@@ -70,7 +70,6 @@ Router\Router::get('/register', function () {
 });
 
 Router\Router::get('/submit', function () {
-    Service\AuthService::requireLogin();
     App\App::view('submit');
 });
 
@@ -90,8 +89,7 @@ Router\Router::get('/author', function () {
 Router\Router::get('/articles', function () {
     $db = getDb();
     $model = new ArticleModel($db);
-    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 20;
+
     respond($model->all());
 });
 
@@ -199,9 +197,7 @@ Router\Router::post('/issues/[i:id]/delete', function ($params) {
 Router\Router::get('/users', function () {
     $db = getDb();
     $model = new UserModel($db);
-    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 20;
-    respond($model->getAllUsers($page, $limit));
+    respond($model->all());
 });
 
 Router\Router::get('/users/[i:id]', function ($params) {
