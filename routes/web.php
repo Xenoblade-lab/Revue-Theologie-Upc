@@ -81,7 +81,7 @@ Router\Router::get('/admin', function () {
     App\App::view('admin' . DIRECTORY_SEPARATOR . 'index');
 });
 Router\Router::get('/author', function () {
-    // Service\AuthService::requireLogin();
+    Service\AuthService::requireLogin();
     App\App::view('author' . DIRECTORY_SEPARATOR . 'index');
 });
 
@@ -101,8 +101,11 @@ Router\Router::get('/articles/[i:id]', function ($params) {
 });
 
 Router\Router::post('/articles', function () {
-    $model = new \Controllers\ArticleController();
-    $model->store($_POST);
+    $db = getDb();
+    $model = new ArticleModel($db);
+    $data = $_POST;
+    $id = $model->createArticle($data);
+    // respond(['id' => $id], 201);
 });
 
 Router\Router::post('/articles/[i:id]/update', function ($params) {

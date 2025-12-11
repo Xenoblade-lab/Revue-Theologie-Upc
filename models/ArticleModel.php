@@ -107,17 +107,38 @@ class ArticleModel {
     /**
      * Récupérer tous les articles avec pagination
      */
+<<<<<<< HEAD
     public function all() {
        
      
+=======
+    public function getAllArticles($page = 1, $limit = 20, $orderBy = 'date_soumission', $order = 'DESC') {
+        $offset = ($page - 1) * $limit;
+        
+        $validOrders = ['date_soumission', 'created_at', 'titre', 'statut'];
+        $orderBy = in_array($orderBy, $validOrders) ? $orderBy : 'date_soumission';
+        $order = strtoupper($order) === 'ASC' ? 'ASC' : 'DESC';
+        
+        // LIMIT et OFFSET doivent être des entiers, pas des paramètres nommés
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+        
+>>>>>>> 35f15f3b08775dbcb4ca724abbbf584edfb77b4c
         $sql = "SELECT a.*, 
                        u.nom as auteur_nom, 
                        u.prenom as auteur_prenom 
                 FROM articles a 
                 LEFT JOIN users u ON a.auteur_id = u.id 
+<<<<<<< HEAD
                 ORDER BY a.date_soumission ASC";
         
         return $this->db->fetchAll($sql);
+=======
+                ORDER BY a.$orderBy $order 
+                LIMIT $limit OFFSET $offset";
+        
+        return $this->db->fetchAll($sql, []);
+>>>>>>> 35f15f3b08775dbcb4ca724abbbf584edfb77b4c
     }
 
     /**
@@ -126,16 +147,18 @@ class ArticleModel {
     public function getArticlesByAuthor($authorId, $page = 1, $limit = 20) {
         $offset = ($page - 1) * $limit;
         
+        // LIMIT et OFFSET doivent être des entiers, pas des paramètres nommés
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+        
         $sql = "SELECT a.* 
                 FROM articles a 
                 WHERE a.auteur_id = :authorId 
                 ORDER BY a.date_soumission DESC 
-                LIMIT :limit OFFSET :offset";
+                LIMIT $limit OFFSET $offset";
         
         return $this->db->fetchAll($sql, [
-            ':authorId' => $authorId,
-            ':limit' => $limit,
-            ':offset' => $offset
+            ':authorId' => $authorId
         ]);
     }
 
