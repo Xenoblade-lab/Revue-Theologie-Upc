@@ -75,7 +75,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function updateFileName(uploadElement, fileName) {
-        const p = uploadElement.querySelector('p');
+        // Chercher d'abord un élément avec l'ID file-name-display
+        let p = uploadElement.querySelector('#file-name-display');
+        if (!p) {
+            // Sinon, chercher le premier élément p
+            p = uploadElement.querySelector('p');
+        }
         if (p) {
             p.textContent = `Fichier sélectionné : ${fileName}`;
             p.style.color = 'var(--color-blue)';

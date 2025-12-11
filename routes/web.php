@@ -104,11 +104,79 @@ Router\Router::get('/articles/[i:id]', function ($params) {
 });
 
 Router\Router::post('/articles', function () {
+    Service\AuthService::requireLogin();
+    
     $db = getDb();
     $model = new ArticleModel($db);
-    $data = $_POST;
-    $id = $model->createArticle($data);
-    // respond(['id' => $id], 201);
+    
+    // Récupérer l'ID de l'utilisateur connecté
+    $userId = $_SESSION['user_id'] ?? null;
+    if (!$userId) {
+        respond(['error' => 'Vous devez être connecté pour soumettre un article'], 401);
+        return;
+    }
+    
+    // Gérer l'upload du fichier
+    $fichierPath = null;
+    if (isset($_FILES['fichier']) && $_FILES['fichier']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'articles' . DIRECTORY_SEPARATOR;
+        
+        // Créer le dossier s'il n'existe pas
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+        
+        $file = $_FILES['fichier'];
+        $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowedExtensions = ['pdf', 'doc', 'docx', 'tex'];
+        
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            respond(['error' => 'Format de fichier non autorisé. Formats acceptés : PDF, Word (.doc, .docx), LaTeX (.tex)'], 400);
+            return;
+        }
+        
+        // Générer un nom de fichier unique
+        $fileName = uniqid('article_', true) . '_' . time() . '.' . $fileExtension;
+        $filePath = $uploadDir . $fileName;
+        
+        // Déplacer le fichier
+        if (move_uploaded_file($file['tmp_name'], $filePath)) {
+            // Chemin relatif pour la base de données
+            $fichierPath = 'uploads/articles/' . $fileName;
+        } else {
+            respond(['error' => 'Erreur lors de l\'upload du fichier'], 500);
+            return;
+        }
+    } else {
+        respond(['error' => 'Veuillez sélectionner un fichier'], 400);
+        return;
+    }
+    
+    // Préparer les données
+    $data = [
+        'titre' => $_POST['titre'] ?? '',
+        'contenu' => $_POST['contenu'] ?? '',
+        'fichier_path' => $fichierPath,
+        'auteur_id' => $userId,
+        'statut' => 'soumis'
+    ];
+    
+    // Validation
+    if (empty($data['titre']) || empty($data['contenu'])) {
+        respond(['error' => 'Le titre et le résumé sont obligatoires'], 400);
+        return;
+    }
+    
+    try {
+        $id = $model->createArticle($data);
+        respond([
+            'success' => true,
+            'message' => 'Article soumis avec succès !',
+            'id' => $id
+        ], 201);
+    } catch (Exception $e) {
+        respond(['error' => 'Erreur lors de la création de l\'article : ' . $e->getMessage()], 500);
+    }
 });
 
 Router\Router::post('/articles/[i:id]/update', function ($params) {

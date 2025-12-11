@@ -313,7 +313,7 @@
                 <div class="card-header">
                     <h2>Soumettre un nouvel article</h2>
                 </div>
-                <form class="auth-form" method="post" action="<?= Router\Router::route('articles') ?>" enctype="multipart/form-data">
+                <form class="auth-form" method="post" action="<?= Router\Router::route('articles') ?>" enctype="multipart/form-data" id="article-submission-form">
                     <input type="hidden" name="auteur_id" value="<?= isset($user) ? $user['id'] : '' ?>">
                     <div class="form-section">
                         <h3>Informations de l'article</h3>
@@ -356,14 +356,14 @@
                     <div class="form-section">
                         <h3>Fichiers</h3>
                         <div class="form-field">
-                            <label>Manuscrit (Word ou LaTeX) *</label>
+                            <label>Manuscrit (PDF, Word ou LaTeX) *</label>
                             <div class="file-upload">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                 </svg>
-                                <p>Glissez-déposez votre fichier ici ou</p>
+                                <p id="file-name-display">Glissez-déposez votre fichier ici ou</p>
                                 <span>Parcourir</span>
-                                <input type="file" hidden accept=".doc,.docx,.tex">
+                                <input type="file" name="fichier" id="fichier-input" required accept=".pdf,.doc,.docx,.tex">
                             </div>
                         </div>
                     </div>
@@ -387,5 +387,62 @@
     <script src="<?= Router\Router::$defaultUri ?>js/script.js"></script>
     <script src="<?= Router\Router::$defaultUri ?>js/dashboard-script.js"></script>
     <script src="<?= Router\Router::$defaultUri ?>js/user-dropdown.js"></script>
+    <script>
+        // Gérer l'affichage du nom du fichier
+        document.getElementById('fichier-input')?.addEventListener('change', function(e) {
+            const fileNameDisplay = document.getElementById('file-name-display');
+            if (this.files.length > 0) {
+                fileNameDisplay.textContent = 'Fichier sélectionné : ' + this.files[0].name;
+                fileNameDisplay.style.color = 'var(--color-blue)';
+                fileNameDisplay.style.fontWeight = '600';
+            } else {
+                fileNameDisplay.textContent = 'Glissez-déposez votre fichier ici ou';
+                fileNameDisplay.style.color = '';
+                fileNameDisplay.style.fontWeight = '';
+            }
+        });
+
+        // Gérer la soumission du formulaire
+        document.getElementById('article-submission-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            // Désactiver le bouton pendant la soumission
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Soumission en cours...';
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success || data.message) {
+                    alert(data.message || 'Article soumis avec succès !');
+                    this.reset();
+                    document.getElementById('file-name-display').textContent = 'Glissez-déposez votre fichier ici ou';
+                    document.getElementById('file-name-display').style.color = '';
+                    document.getElementById('file-name-display').style.fontWeight = '';
+                    // Recharger la page pour voir le nouvel article
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    alert(data.error || 'Une erreur est survenue lors de la soumission');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de la soumission de l\'article');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            });
+        });
+    </script>
 </body>
 </html>
