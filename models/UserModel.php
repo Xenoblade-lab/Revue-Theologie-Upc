@@ -12,6 +12,8 @@ class UserModel {
      * Créer un nouvel utilisateur
      */
     public function createUser($data) {
+        var_dump($data);
+        die;
         $sql = "INSERT INTO users (nom, prenom, email, password, statut, created_at, updated_at) 
                 VALUES (:nom, :prenom, :email, :password, :statut, NOW(), NOW())";
         
@@ -23,7 +25,7 @@ class UserModel {
             ':statut' => $data['statut'] ?? 'actif'
         ];
         
-        return $this->db->execute($sql, $params);
+        return $this->db->connect()->prepare($sql)->execute($params);
     }
 
     /**

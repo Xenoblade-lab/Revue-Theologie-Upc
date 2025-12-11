@@ -8,13 +8,13 @@
     public function sign(array $datas = [], array $fields = [])
     {
        $user = new \Models\UserModel(new \Models\Database());
-      if (!$this->isNotEmpty($datas) || !$this->verifyFields($datas, $fields)) {
-           $this->jsonResponse([
-              'status' => 400,
-              'message' => 'Tous les champs sont requis'
-          ]);
-           return;
-      }
+    //   if (!$this->isNotEmpty($datas)) {
+    //        $this->jsonResponse([
+    //           'status' => 400,
+    //           'message' => 'Tous les champs sont requis'
+    //       ]);
+    //        return;
+    //   }
 
      // Validation des longueurs
     //   if (
@@ -47,7 +47,7 @@
     //      }
     //  }
 
-     if(!$this->isEqual($datas['password'],$datas['confirmPassword']))
+     if(!$this->isEqual($datas['password'],$datas['confirm-password']))
      {
         $this->jsonResponse([
             'status' => '409',
@@ -57,25 +57,26 @@
         return;
      }
 
-     if($user->getUserByEmail($datas['mails']))
-     {
-        // arrete tout si l utilisateur existe
-        $this->jsonResponse([
-            'status' => '409',
-            'message' => 'Utilisateur existant'
-        ]);
-        return;
-     }
-
+    //  if($user->getUserByEmail($datas['email']))
+    //  {
+    //     // arrete tout si l utilisateur existe
+    //     $this->jsonResponse([
+    //         'status' => '409',
+    //         'message' => 'Utilisateur existant'
+    //     ]);
+    //     return;
+    //  }
+//    var_dump($datas);
+//    die;
   
     // Si tout est valide, tu peux continuer ici (ex: insertion en base)
     $datas = [
-        'nom' => $datas['fullname'],
+        'nom' => $datas['nom'],
         'prenom' => $datas['prenom'],
         'institution' => $datas['institution'],
         'email' => $datas['email'],
         'password' => $datas['password'],
-        'confirmPassword' => $datas['confirmPassword'],
+        'confirmPassword' => $datas['confirm-password'],
         'terms' => $datas['terms']
     ];
      $user->createUser($datas);

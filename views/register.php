@@ -114,6 +114,6 @@
         </div>
     </div>
 
-    <script src="./js/auth-script.js"></script>
+    <!-- <script src="./js/auth-script.js"></script> -->
 </body>
 </html>

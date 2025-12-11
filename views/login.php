@@ -25,7 +25,7 @@
                 <div class="auth-body">
                     <div class="error-message" id="error-message"></div>
                     
-                    <form class="auth-form" id="login-form">
+                    <form class="auth-form" id="login-form" action="<?= Router\Router::route('login') ?>" method="post">
                         <div class="form-group">
                             <label for="email">Adresse email</label>
                             <input type="email" id="email" name="email" placeholder="votre.email@exemple.com" required>
@@ -86,6 +86,6 @@
         </div>
     </div>
 
-    <script src="./js/auth-script.js"></script>
+    <!-- <script src="./js/auth-script.js"></script> -->
 </body>
 </html>

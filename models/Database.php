@@ -33,6 +33,7 @@ class Database {
             // Options de sécurité et performance
             $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+            return $this->conn;
         } catch (\PDOException $e) {
             die("Erreur de connexion : " . $e->getMessage());
         }
@@ -49,42 +50,42 @@ class Database {
     /**
      * Exécuter une requête avec paramètres (SELECT, INSERT, UPDATE, DELETE)
      */
-    public function query($sql, $params = []) {
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute($params);
-        return $stmt;
-    }
+    // public function query($sql, $params = []) {
+    //     $stmt = $this->conn->prepare($sql);
+    //     $stmt->execute($params);
+    //     return $stmt;
+    // }
 
-    /**
-     * Récupérer plusieurs enregistrements
-     */
-    public function fetchAll($sql, $params = []) {
-        $stmt = $this->query($sql, $params);
-        return $stmt->fetchAll();
-    }
+    // /**
+    //  * Récupérer plusieurs enregistrements
+    //  */
+    // public function fetchAll($sql, $params = []) {
+    //     $stmt = $this->query($sql, $params);
+    //     return $stmt->fetchAll();
+    // }
 
-    /**
-     * Récupérer un seul enregistrement
-     */
-    public function fetchOne($sql, $params = []) {
+    // /**
+    //  * Récupérer un seul enregistrement
+    //  */
+    // public function fetchOne($sql, $params = []) {
        
-        $stmt = $this->query($sql, $params);
-        return $stmt->fetch();
-    }
+    //     $stmt = $this->query($sql, $params);
+    //     return $stmt->fetch();
+    // }
 
-    /**
-     * Exécuter une requête INSERT/UPDATE/DELETE
-     */
-    public function execute($sql, $params = []) {
-        $stmt = $this->conn->prepare($sql);
-        return $stmt->execute($params);
-    }
+    // /**
+    //  * Exécuter une requête INSERT/UPDATE/DELETE
+    //  */
+    // public function execute($sql, $params = []) {
+    //     $stmt = $this->conn->prepare($sql);
+    //     return $stmt->execute($params);
+    // }
 
-    /**
-     * Récupérer le dernier ID inséré
-     */
-    public function lastInsertId() {
-        return $this->conn->lastInsertId();
-    }
+    // /**
+    //  * Récupérer le dernier ID inséré
+    //  */
+    // public function lastInsertId() {
+    //     return $this->conn->lastInsertId();
+    // }
 }
 ?>
