@@ -11,7 +11,17 @@ class UserModel {
     /**
      * Créer un nouvel utilisateur
      */
-    public function createUser(...$data) {
+    public function createUser($data) {
+        // Si plusieurs arguments sont passés, prendre le premier (tableau)
+        if (func_num_args() > 1) {
+            $data = func_get_arg(0);
+        }
+        
+        // S'assurer que $data est un tableau
+        if (!is_array($data)) {
+            return false;
+        }
+        
         $sql = "INSERT INTO users (nom, prenom, email, password, statut, created_at, updated_at) 
                 VALUES (:nom, :prenom, :email, :password, :statut, NOW(), NOW())";
         

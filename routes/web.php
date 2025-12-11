@@ -83,6 +83,7 @@ Router\Router::get('/admin', function () {
     App\App::view('admin' . DIRECTORY_SEPARATOR . 'index');
 });
 Router\Router::get('/author', function () {
+    Service\AuthService::requireLogin();
     App\App::view('author' . DIRECTORY_SEPARATOR . 'index');
 });
 
@@ -105,9 +106,9 @@ Router\Router::get('/articles/[i:id]', function ($params) {
 Router\Router::post('/articles', function () {
     $db = getDb();
     $model = new ArticleModel($db);
-    $data = input();
+    $data = $_POST;
     $id = $model->createArticle($data);
-    respond(['id' => $id], 201);
+    // respond(['id' => $id], 201);
 });
 
 Router\Router::post('/articles/[i:id]/update', function ($params) {
@@ -282,12 +283,48 @@ Router\Router::post('/reviews/[i:id]/decline', function ($params) {
 // =========== POST ================
 Router\Router::post('/login', function () {
     $auth = new Service\AuthService();
-    $auth->login($_POST);
+    $auth->login(input());
 });
 
 Router\Router::post('/register', function () {
     $auth = new Service\AuthService();
-    $auth->sign($_POST);
+    $auth->sign(input());
+});
+
+Router\Router::get('/logout', function () {
+    $auth = new Service\AuthService();
+    $auth->logout();
+});
+
+Router\Router::post('/logout', function () {
+    $auth = new Service\AuthService();
+    $auth->logout();
+});
+
+// Route pour récupérer les notifications
+Router\Router::get('/api/notifications', function () {
+    Service\AuthService::requireLogin();
+    $db = getDb();
+    $userModel = new UserModel($db);
+    $userId = $_SESSION['user_id'] ?? null;
+    
+    if (!$userId) {
+        respond(['notifications' => []], 200);
+        return;
+    }
+    
+    // Récupérer les notifications (à adapter selon votre structure)
+    $notifications = [];
+    // TODO: Implémenter la récupération des notifications depuis la base de données
+    
+    respond(['notifications' => $notifications], 200);
+});
+
+// Route pour marquer une notification comme lue
+Router\Router::post('/api/notifications/[i:id]/read', function ($params) {
+    Service\AuthService::requireLogin();
+    // TODO: Implémenter la mise à jour de la notification
+    respond(['message' => 'Notification marquée comme lue'], 200);
 });
 
 ?>

@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('error-message');
             
             // Basic validation
             if (!email || !password) {
@@ -30,13 +29,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Simulate login (replace with actual API call)
-            console.log('Login attempt:', { email, password });
-            
-            // Simulate successful login
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1000);
+            try {
+                const response = await fetch('http://localhost/Revue-Theologie-Upc/public/login', {
+                    method: 'POST',
+                    body: JSON.stringify({ email, password }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 200) {
+                    showSuccess('Connexion réussie ! Redirection...');
+                    setTimeout(() => {
+                        if (result.redirect) {
+                            window.location.href = result.redirect;
+                        } else {
+                            window.location.href = 'http://localhost/Revue-Theologie-Upc/public/';
+                        }
+                    }, 1000);
+                } else {
+                    showError(result.message || 'Erreur de connexion');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showError('Une erreur est survenue lors de la connexion');
+            }
         });
     }
 
@@ -75,24 +92,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Simulate registration (replace with actual API call)
-            const reponse = await fetch('http://localhost:8000/register',{
-                method:"POST",
-                body: JSON.stringify({fullname,prenom,email,institution, password, confirmPassword,terms}),
-                headers : {'Content-Type' : 'application/json'}
-            });
+            // Envoyer les données d'inscription
+            try {
+                const response = await fetch('http://localhost/Revue-Theologie-Upc/public/register', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        nom: fullname,
+                        prenom: prenom,
+                        email: email,
+                        institution: institution,
+                        password: password,
+                        'confirm-password': confirmPassword,
+                        terms: terms
+                    }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
 
-            const sign = await reponse.json();
-            console.log(sign);
-            console.log('Registration attempt:', { fullname, email, institution, password });
-            
-            // Show success message
-            showSuccess('Compte créé avec succès ! Redirection...');
-            
-            // Redirect to login
-            // setTimeout(() => {
-            //     window.location.href = 'login.html';
-            // }, 2000);
+                const result = await response.json();
+                
+                if (result.status === 200) {
+                    showSuccess('Compte créé avec succès ! Redirection...');
+                    setTimeout(() => {
+                        if (result.redirect) {
+                            window.location.href = result.redirect;
+                        } else {
+                            window.location.href = 'http://localhost/Revue-Theologie-Upc/public/login';
+                        }
+                    }, 2000);
+                } else {
+                    showError(result.message || 'Erreur lors de l\'inscription');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showError('Une erreur est survenue lors de l\'inscription');
+            }
         });
     }
 
