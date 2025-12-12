@@ -11,17 +11,7 @@ class UserModel {
     /**
      * Créer un nouvel utilisateur
      */
-    public function createUser($data) {
-        // Si plusieurs arguments sont passés, prendre le premier (tableau)
-        if (func_num_args() > 1) {
-            $data = func_get_arg(0);
-        }
-        
-        // S'assurer que $data est un tableau
-        if (!is_array($data)) {
-            return false;
-        }
-        
+    public function createUser(...$data) {
         $sql = "INSERT INTO users (nom, prenom, email, password, statut, created_at, updated_at) 
                 VALUES (:nom, :prenom, :email, :password, :statut, NOW(), NOW())";
         
@@ -33,7 +23,7 @@ class UserModel {
             ':statut' => $data['statut'] ?? 'actif'
         ];
         
-        return $this->db->execute($sql, $params);
+        return $this->db->connect()->prepare($sql)->execute($params);
     }
 
     /**
@@ -68,9 +58,9 @@ class UserModel {
     /**
      * Supprimer un utilisateur (soft delete - mise à jour du statut)
      */
-    public function deleteUser($id) {
-        $sql = "UPDATE users SET statut = 'suspendu', updated_at = NOW() WHERE id = :id";
-        return $this->db->execute($sql, [':id' => $id]);
+    public function delete($id) {
+        $sql = "DELETE FROM users WHERE id = :id";
+        $this->db->execute($sql, [':id' => $id]);
     }
 
     /**
@@ -92,15 +82,12 @@ class UserModel {
     /**
      * Récupérer tous les utilisateurs avec pagination
      */
-    public function getAllUsers($page = 1, $limit = 20) {
-        $offset = ($page - 1) * $limit;
+    public function all() {
+       
         
-        $sql = "SELECT * FROM users ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+        $sql = "SELECT * FROM users ORDER BY created_at ASC";
         
-        return $this->db->fetchAll($sql, [
-            ':limit' => $limit,
-            ':offset' => $offset
-        ]);
+        return $this->db->fetchAll($sql);
     }
 
     /**

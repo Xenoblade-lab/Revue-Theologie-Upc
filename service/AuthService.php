@@ -7,18 +7,7 @@
   {
     public function sign(array $datas = [], array $fields = ['nom', 'prenom', 'email', 'password', 'confirm-password'])
     {
-      // Normaliser les noms de champs (fullname -> nom)
-      if (isset($datas['fullname']) && !isset($datas['nom'])) {
-          $datas['nom'] = $datas['fullname'];
-      }
-      if (isset($datas['confirmPassword']) && !isset($datas['confirm-password'])) {
-          $datas['confirm-password'] = $datas['confirmPassword'];
-      }
-      
-      // Connexion à la base de données
-      $db = $this->db();
-      $userModel = new \Models\UserModel($db);
-      
+      $user = new \Models\UserModel(new \Models\Database());
       if (!$this->isNotEmpty($datas) || !$this->verifyFields($datas, $fields)) {
            $this->jsonResponse([
               'status' => 400,
@@ -29,15 +18,17 @@
 
      // Validation des longueurs
       if (
-          !isset($datas['nom']) || !$this->valideLength($datas['nom'], 2, 64) ||
-          !isset($datas['prenom']) || !$this->valideLength($datas['prenom'], 2, 64) ||
-          !isset($datas['email']) || !$this->valideLength($datas['email'], 5, 64) ||
-          !isset($datas['password']) || !$this->valideLength($datas['password'], 8, 64) ||
-          !isset($datas['confirm-password']) || !$this->valideLength($datas['confirm-password'], 8, 64)
+          !$this->valideLength($datas['nom'], 6, 64) ||
+          !$this->valideLength($datas['prenom'], 6, 64) ||
+          !$this->valideLength($datas['institution'], 6, 64) ||
+          !$this->valideLength($datas['email'], 6, 64) ||
+          !$this->valideLength($datas['password'], 6, 64)  ||
+          !$this->valideLength($datas['phone'], 6, 64)  ||
+          !$this->valideLength($datas['confirm-password'], 6, 64) 
       ) {
           $this->jsonResponse([
               'status' => 400,
-              'message' => 'Longueur incorrecte (nom et prénom min 2, email min 5, mot de passe min 8)'
+              'message' => 'Longueur incorrecte'
           ]);
           return;
       }
@@ -60,26 +51,20 @@
         return;
      }
 
-     // Vérifier si l'utilisateur existe déjà
-     if($userModel->getUserByEmail($datas['email']))
+     if($user->getUserByEmail($datas['mails']))
      {
+        // arrete tout si l utilisateur existe
         $this->jsonResponse([
-            'status' => 409,
-            'message' => 'Un utilisateur avec cet email existe déjà'
+            'status' => '409',
+            'message' => 'Utilisateur existant'
         ]);
         return;
      }
 
-     // Créer l'utilisateur avec un tableau associatif
-     $userData = [
-         'nom' => $datas['nom'],
-         'prenom' => $datas['prenom'],
-         'email' => $datas['email'],
-         'password' => password_hash($datas['password'], PASSWORD_DEFAULT),
-         'statut' => 'actif'
-     ];
-     
-     $userModel->createUser($userData);
+  
+    // Si tout est valide, tu peux continuer ici (ex: insertion en base)
+  
+     $user->createUser($user,$datas['nom'],$datas['prenom'],$datas['institution'],$datas['email'],password_hash($datas['password'],PASSWORD_DEFAULT) ,3,'');
 
      $this->jsonResponse([
          'status' => 200,

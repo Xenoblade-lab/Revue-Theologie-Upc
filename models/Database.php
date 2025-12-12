@@ -6,7 +6,7 @@ class Database {
     private $username;       // utilisateur MySQL
     private $password;           // mot de passe MySQL
     private $port;               // port MySQL
-    private $conn;                    // objet PDO
+    protected $conn;                    // objet PDO
     private $config = []; 
 
  
@@ -33,6 +33,7 @@ class Database {
             // Options de sécurité et performance
             $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+            return $this->conn;
         } catch (\PDOException $e) {
             die("Erreur de connexion : " . $e->getMessage());
         }
@@ -55,17 +56,19 @@ class Database {
         return $stmt;
     }
 
-    /**
-     * Récupérer plusieurs enregistrements
-     */
+    // /**
+    //  * Récupérer plusieurs enregistrements
+    //  */
+    #good
     public function fetchAll($sql, $params = []) {
         $stmt = $this->query($sql, $params);
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    /**
-     * Récupérer un seul enregistrement
-     */
+    // /**
+    //  * Récupérer un seul enregistrement
+    //  */
+    #good
     public function fetchOne($sql, $params = []) {
        
         $stmt = $this->query($sql, $params);
@@ -75,6 +78,7 @@ class Database {
     /**
      * Exécuter une requête INSERT/UPDATE/DELETE
      */
+    #good
     public function execute($sql, $params = []) {
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($params);
@@ -83,6 +87,7 @@ class Database {
     /**
      * Récupérer le dernier ID inséré
      */
+    #good
     public function lastInsertId() {
         return $this->conn->lastInsertId();
     }

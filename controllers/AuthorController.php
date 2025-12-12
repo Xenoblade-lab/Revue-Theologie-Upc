@@ -3,7 +3,7 @@ namespace Controllers;
 
 use Models\Database;
 use Models\UserModel;
-use Models\ArticleModel;
+use Models\BlogModel;
 
 class AuthorController extends Controller
 {
@@ -22,7 +22,7 @@ class AuthorController extends Controller
         
         $db = $this->db();
         $userModel = new UserModel($db);
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
         
         // Récupérer les informations de l'utilisateur
         $user = $userModel->getUserById($userId);
@@ -92,7 +92,7 @@ class AuthorController extends Controller
             'total_articles' => $stats['total']
         ];
         
-        \App\App::view('author' . DIRECTORY_SEPARATOR . 'index', $data);
+        \App\App::view('author' . DIRECTORY_SEPARATOR . 'index');
     }
     
     /**
@@ -110,7 +110,7 @@ class AuthorController extends Controller
         
         $db = $this->db();
         $userModel = new UserModel($db);
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
         
         // Récupérer les informations de l'utilisateur
         $user = $userModel->getUserById($userId);
@@ -495,4 +495,3 @@ class AuthorController extends Controller
         return $statuts[$statut] ?? ucfirst($statut);
     }
 }
-

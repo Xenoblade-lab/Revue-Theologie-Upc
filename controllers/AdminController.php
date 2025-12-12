@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 namespace Controllers;
 
 use Models\Database;
@@ -109,3 +110,15 @@ class AdminController extends Controller
     }
 }
 
+=======
+  namespace Controllers;
+
+  class AdminController extends UserController
+  {
+      public function delete(array $params = [])
+      {
+        return parent::delete($params);
+      }
+  }
+?>
+>>>>>>> 1a9ccc2c006b448c9a91bc5473440c07f16b232c

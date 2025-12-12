@@ -108,24 +108,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     headers: { 'Content-Type': 'application/json' }
                 });
 
-                const result = await response.json();
-                
-                if (result.status === 200) {
-                    showSuccess('Compte créé avec succès ! Redirection...');
-                    setTimeout(() => {
-                        if (result.redirect) {
-                            window.location.href = result.redirect;
-                        } else {
-                            window.location.href = 'http://localhost/Revue-Theologie-Upc/public/login';
-                        }
-                    }, 2000);
-                } else {
-                    showError(result.message || 'Erreur lors de l\'inscription');
-                }
-            } catch (error) {
-                console.error('Erreur:', error);
-                showError('Une erreur est survenue lors de l\'inscription');
-            }
+            const sign = await reponse.json();
+            console.log(sign);
+            console.log('Registration attempt:', { fullname, email, institution, password });
+            
+            // Show success message
+            showSuccess('Compte créé avec succès ! Redirection...');
+            
+            // Redirect to login
+            // setTimeout(() => {
+            //     window.location.href = 'login.html';
+            // }, 2000);
         });
     }
 
