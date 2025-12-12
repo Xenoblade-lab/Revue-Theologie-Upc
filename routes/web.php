@@ -88,7 +88,7 @@ Router\Router::get('/author/articles', [\Controllers\AuthorController::class, 'a
 Router\Router::get('/author/abonnement', [\Controllers\AuthorController::class, 'abonnement']);
 Router\Router::get('/author/profil', [\Controllers\AuthorController::class, 'profil']);
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 // ======== Reviewer Dashboard ========
 Router\Router::get('/reviewer', [\Controllers\ReviewerController::class, 'index']);
 Router\Router::get('/reviewer/terminees', [\Controllers\ReviewerController::class, 'terminees']);
@@ -98,14 +98,14 @@ Router\Router::get('/reviewer/profil', [\Controllers\ReviewerController::class, 
 // ======== Routes ArticleModel ========
 Router\Router::get('/articles', function () {
     $db = getDb();
-    $model = new ArticleModel($db);
+    $model = new BlogModel($db);
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 20;
-    respond($model->getAllArticles($page, $limit));
+    respond($model->getAllArtices($page, $limit));
 });
-=======
+// =======
 // ======== Routes BlogModel ========
->>>>>>> 1a9ccc2c006b448c9a91bc5473440c07f16b232c
+// >>>>>>> 1a9ccc2c006b448c9a91bc5473440c07f16b232c
 
 Router\Router::get('/articles/[i:id]', function ($params) {
     $db = getDb();

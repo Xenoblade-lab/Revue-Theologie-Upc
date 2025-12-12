@@ -16,7 +16,7 @@
       $db->connect();
       
       $origin = isset($_SERVER['BASE_URI']) ? $_SERVER['BASE_URI'] : '';
-      // Router\Router::$defaultUri= "http://localhost/Revue-Theologie-Upc/public/";
+      Router\Router::$defaultUri= "http://localhost/Revue-Theologie-Upc/public/";
       Router\Router::origin($origin);
       Router\Router::matcher();
 ?>
