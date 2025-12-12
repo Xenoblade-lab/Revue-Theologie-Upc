@@ -79,9 +79,11 @@ Router\Router::get('/test', function () {
     var_dump(App\Html::class('/test'));
 });
 
-Router\Router::get('/admin', function () {
-    App\App::view('admin' . DIRECTORY_SEPARATOR . 'index');
-});
+Router\Router::get('/admin', [\Controllers\AdminController::class, 'index']);
+Router\Router::get('/admin/users', [\Controllers\AdminController::class, 'users']);
+Router\Router::get('/admin/volumes', [\Controllers\AdminController::class, 'volumes']);
+Router\Router::get('/admin/paiements', [\Controllers\AdminController::class, 'paiements']);
+Router\Router::get('/admin/settings', [\Controllers\AdminController::class, 'settings']);
 Router\Router::get('/author', [\Controllers\AuthorController::class, 'index']);
 Router\Router::get('/author/articles', [\Controllers\AuthorController::class, 'articles']);
 Router\Router::get('/author/abonnement', [\Controllers\AuthorController::class, 'abonnement']);
@@ -90,6 +92,12 @@ Router\Router::get('/author/article/[i:id]', [\Controllers\AuthorController::cla
 Router\Router::get('/author/article/[i:id]/edit', [\Controllers\AuthorController::class, 'articleEdit']);
 Router\Router::post('/author/article/[i:id]/update', [\Controllers\AuthorController::class, 'articleUpdate']);
 Router\Router::post('/author/article/[i:id]/delete', [\Controllers\AuthorController::class, 'articleDelete']);
+
+// ======== Reviewer Dashboard ========
+Router\Router::get('/reviewer', [\Controllers\ReviewerController::class, 'index']);
+Router\Router::get('/reviewer/terminees', [\Controllers\ReviewerController::class, 'terminees']);
+Router\Router::get('/reviewer/historique', [\Controllers\ReviewerController::class, 'historique']);
+Router\Router::get('/reviewer/profil', [\Controllers\ReviewerController::class, 'profil']);
 
 // ======== Routes ArticleModel ========
 Router\Router::get('/articles', function () {

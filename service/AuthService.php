@@ -134,10 +134,26 @@
                 if (session_status() === PHP_SESSION_NONE) {
                     session_start();
                 }
+
+                // Récupérer le rôle depuis roles/model_has_roles s'il existe
+                $roleRow = $db->fetchOne(
+                    "SELECT r.name 
+                     FROM roles r 
+                     JOIN model_has_roles mr ON mr.role_id = r.id 
+                     WHERE mr.model_type = 'App\\\\Models\\\\User' 
+                       AND mr.model_id = :uid 
+                     LIMIT 1",
+                    [':uid' => $user['id']]
+                );
+                $role = $roleRow['name'] ?? null;
                 
                 // Stocker les informations de l'utilisateur en session
                 $_SESSION['user'] = $user;
                 $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_email'] = $user['email'] ?? null;
+                $_SESSION['user_nom'] = $user['nom'] ?? null;
+                $_SESSION['user_prenom'] = $user['prenom'] ?? null;
+                $_SESSION['user_role'] = $role;
                 $_SESSION['panier'] = [];
 
                 $this->jsonResponse([

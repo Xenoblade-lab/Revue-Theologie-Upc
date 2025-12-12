@@ -4,6 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin - Revue de Théologie UPC</title>
+    <link rel="stylesheet" href="<?= Router\Router::$defaultUri ?>css/styles.css">
+    <link rel="stylesheet" href="<?= Router\Router::$defaultUri ?>css/dashboard-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <?php include __DIR__ . DIRECTORY_SEPARATOR . '_sidebar.php'; ?>
+
+        <main class="dashboard-main">
+            <div class="dashboard-header fade-up">
+                <div class="header-title">
+                    <h1>Tableau de bord</h1>
+                    <p>Vue d'ensemble de la revue</p>
+                </div>
+                <div class="header-actions">
+                    <button class="notification-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                        <span class="notification-badge"></span>
+                    </button>
+                    <button class="btn btn-primary" onclick="location.href='<?= Router\Router::route('admin') ?>#articles'">+ Nouveau numéro</button>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid" id="stats">
+                <div class="stat-card fade-up">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value"><?= $stats['articles_total'] ?? 0 ?></div>
+                    <div class="stat-label">Articles soumis</div>
+                </div>
+
+                <div class="stat-card fade-up">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value"><?= $stats['articles_publies'] ?? 0 ?></div>
+                    <div class="stat-label">Articles publiés</div>
+                </div>
+
+                <div class="stat-card fade-up">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value"><?= $stats['evaluateurs_actifs'] ?? 0 ?></div>
+                    <div class="stat-label">Utilisateurs / Évaluateurs</div>
+                </div>
+
+                <div class="stat-card fade-up">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value"><?= number_format($stats['revenus_mois'] ?? 0, 2, ',', ' ') ?> $</div>
+                    <div class="stat-label">Revenus ce mois</div>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="content-grid" id="articles">
+                <div class="content-card fade-up">
+                    <div class="card-header">
+                        <h2>Soumissions récentes</h2>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Auteur</th>
+                                <th>Date</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($recentSubmissions)): ?>
+                                <?php foreach ($recentSubmissions as $sub): ?>
+                                    <?php
+                                        $statut = strtolower($sub['statut'] ?? '');
+                                        $badge = 'pending';
+                                        if (strpos($statut, 'valide') !== false || strpos($statut, 'publ') !== false) $badge = 'published';
+                                        if (strpos($statut, 'rej') !== false) $badge = 'rejected';
+                                    ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($sub['titre']) ?></td>
+                                        <td><?= htmlspecialchars(($sub['prenom'] ?? '') . ' ' . ($sub['nom'] ?? '')) ?></td>
+                                        <td><?= !empty($sub['date_soumission']) ? date('d M Y', strtotime($sub['date_soumission'])) : '—' ?></td>
+                                        <td><span class="status-badge <?= $badge ?>"><?= htmlspecialchars($sub['statut']) ?></span></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr><td colspan="4" style="text-align:center; padding:1.5rem;">Aucune soumission récente.</td></tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-card fade-up">
+                    <div class="card-header">
+                        <h2>Activité récente</h2>
+                        <p style="margin:0;color:var(--color-gray-600);font-size:0.9rem;">Flux à connecter aux logs si disponibles.</p>
+                    </div>
+                    <div style="padding: var(--spacing-md); color: var(--color-gray-600);">
+                        Historique des dernières actions (soumissions, évaluations, publications).
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="mobile-menu-btn" id="mobile-menu-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+
+    <script src="<?= Router\Router::$defaultUri ?>js/script.js"></script>
+    <script src="<?= Router\Router::$defaultUri ?>js/dashboard-script.js"></script>
+    <script src="<?= Router\Router::$defaultUri ?>js/user-dropdown.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Revue de Théologie UPC</title>
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/dashboard-styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
