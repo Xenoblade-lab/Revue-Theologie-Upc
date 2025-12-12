@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="stat-value"><?= $stats['evaluateurs_actifs'] ?? 0 ?></div>
-                    <div class="stat-label">Utilisateurs / Évaluateurs</div>
+                    <div class="stat-label">Utilisateurs</div>
                 </div>
 
                 <div class="stat-card fade-up">
@@ -93,9 +93,11 @@
                                 <th>Auteur</th>
                                 <th>Date</th>
                                 <th>Statut</th>
+                           
                             </tr>
                         </thead>
                         <tbody>
+<<<<<<< HEAD
                             <?php if (!empty($recentSubmissions)): ?>
                                 <?php foreach ($recentSubmissions as $sub): ?>
                                     <tr>
@@ -108,6 +110,23 @@
                             <?php else: ?>
                                 <tr><td colspan="4" style="text-align:center; padding:1.5rem;">Aucune soumission récente.</td></tr>
                             <?php endif; ?>
+=======
+                           
+                            <?php foreach($recentSubmissions as $recent): ?>
+                                <tr>
+                                    <td><?=htmlspecialchars($recent->titre) ?></td>
+                                    <td><?=htmlspecialchars(($recent->prenom ?? '') . ' ' . ($recent->nom ?? '')) ?></td>
+                                    <td><?=!empty($recent->date_soumission) ? date('d M Y', strtotime($recent->date_soumission)) : '—' ?></td>
+                                    <!-- published,rejected -->
+                                    <td><span class="status-badge <?='pending' ?>"><?= htmlspecialchars($recent->statut) ?></span></td>
+                                </tr>
+                         
+                                 
+                            <?php endforeach ?>
+                            <?php if(!count($recentSubmissions)): ?>
+                              <tr><td colspan="4" style="text-align:center; padding:1.5rem;">Aucune soumission récente.</td></tr>
+                            <?php endif?>
+>>>>>>> e5eb218e8c5dd2577645e71df9b019fbb6ed9a5c
                         </tbody>
                     </table>
                 </div>
