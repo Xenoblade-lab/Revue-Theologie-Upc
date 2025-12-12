@@ -87,11 +87,6 @@ Router\Router::get('/author/abonnement', [\Controllers\AuthorController::class, 
 Router\Router::get('/author/profil', [\Controllers\AuthorController::class, 'profil']);
 
 // ======== Routes BlogModel ========
-Router\Router::get('/articles', function () {
-    $db = getDb();
-    $model = new BlogModel($db);
-    respond($model->all());
-});
 
 Router\Router::get('/articles/[i:id]', function ($params) {
     $db = getDb();
@@ -197,7 +192,7 @@ Router\Router::post('/issues/[i:id]/delete', function ($params) {
 Router\Router::get('/admin/users', function () {
     $db = getDb();
     $model = new UserModel($db);
-    respond($model->all());
+    var_dump($model->all());
 });
 
 Router\Router::get('/admin/users/[i:id]', function ($params) {
@@ -206,7 +201,7 @@ Router\Router::get('/admin/users/[i:id]', function ($params) {
     $user = $model->getUserById($params['id']);
     $user ? respond($user) : respond(['message' => 'Utilisateur introuvable'], 404);
 });
-
+#good
 Router\Router::post('/admin/users', function () {
     $db = getDb();
     $model = new UserModel($db);
@@ -220,12 +215,10 @@ Router\Router::post('/users/[i:id]/update', function ($params) {
     $model->updateUser($params['id'], input());
     respond(['message' => 'Utilisateur mis à jour']);
 });
-
+#good
 Router\Router::post('/users/[i:id]/delete', function ($params) {
-    $db = getDb();
-    $model = new UserModel($db);
-    $model->deleteUser($params['id']);
-    respond(['message' => 'Utilisateur suspendu']);
+    $user = new \Controllers\AdminController();
+    $user->delete($params);
 });
 
 // ======== Routes ReviewModel (évaluations) ========

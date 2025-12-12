@@ -92,7 +92,7 @@ class AuthorController extends Controller
             'total_articles' => $stats['total']
         ];
         
-        \App\App::view('author' . DIRECTORY_SEPARATOR . 'index', $data);
+        \App\App::view('author' . DIRECTORY_SEPARATOR . 'index');
     }
     
     /**

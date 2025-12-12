@@ -23,7 +23,8 @@
     </nav>
 
     <!-- Page Header -->
-    <section class="page-header">
+    <section class="page-header">ller::class, 'index']);
+
         <div class="container">
             <h1 class="fade-up">Numéros & Archives</h1>
             <p class="fade-up">Explorez nos publications scientifiques en théologie africaine</p>
@@ -42,6 +43,7 @@
             </div>
 
             <!-- 2025 Issues -->
+          <?php foreach($blog as $blogs) : ?>
             <div class="year-content active" data-year="2025">
                 <div class="issues-grid">
                     <div class="issue-card fade-up">
@@ -55,21 +57,21 @@
                                 <span>No 1</span>
                                 <span>2025</span>
                             </div>
-                            <h3>Théologie Contextuelle et Défis Contemporains</h3>
-                            <p>Exploration des perspectives théologiques africaines face aux enjeux modernes...</p>
+                            <h3>T<?= $blogs->titre ?></h3>
+                            <p><?= substr($blogs->contenu,0,60) ?></p>
                             <div class="issue-stats-small">
-                                <span>12 articles</span>
-                                <span>250 pages</span>
+                                <span>0 articles</span>
+                                <span>0 pages</span>
                             </div>
                             <div class="issue-actions-small">
-                                <button class="btn btn-primary">Lire</button>
+                                <a class="btn btn-primary" href="<?= Router\Router::route('archives/'.$blogs->id) ?>">Lire</a>
                                 <button class="btn btn-outline">PDF</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+        <?php endforeach; ?>
             <!-- 2024 Issues -->
             <div class="year-content " data-year="2024">
                 <div class="issues-grid">

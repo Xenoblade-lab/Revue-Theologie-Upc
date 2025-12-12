@@ -6,7 +6,10 @@ class BlogContoller extends Controller
 {
     public function index()
     {
-        \App\App::view('archives');
+        $db = getDb();
+        $blog = new \Models\BlogModel($db);
+        $blog =  $blog->all();
+        \App\App::view('archives',['blog' => $blog]);
     }
 
     public function show($params)

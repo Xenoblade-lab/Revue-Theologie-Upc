@@ -12,7 +12,7 @@ class UserController extends Controller
         $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 20;
 
         $model = new UserModel($this->db());
-        $this->respond($model->getAllUsers($page, $limit));
+        $this->respond($model->all());
     }
 
     public function show(array $params)
@@ -36,11 +36,18 @@ class UserController extends Controller
         $this->respond(['message' => 'Utilisateur mis à jour']);
     }
 
-    public function delete(array $params)
+    public function delete(array $params = [])
     {
-        $model = new UserModel($this->db());
-        $model->deleteUser($params['id'] ?? 0);
-        $this->respond(['message' => 'Utilisateur suspendu']);
+        $user = new UserModel($this->db());
+
+        if((int)$params['id'] && $user->getUserById((int)$params['id']))
+        {
+            echo "nice";
+            $user->delete($params['id']);
+        }
+        echo "echec";
+        header("Location: ".\Router\Router::route(''));
+        
     }
 }
 ?>

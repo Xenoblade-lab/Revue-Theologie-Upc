@@ -58,9 +58,9 @@ class UserModel {
     /**
      * Supprimer un utilisateur (soft delete - mise à jour du statut)
      */
-    public function deleteUser($id) {
-        $sql = "UPDATE users SET statut = 'suspendu', updated_at = NOW() WHERE id = :id";
-        return $this->db->execute($sql, [':id' => $id]);
+    public function delete($id) {
+        $sql = "DELETE FROM users WHERE id = :id";
+        $this->db->execute($sql, [':id' => $id]);
     }
 
     /**
