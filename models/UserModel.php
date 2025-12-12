@@ -11,7 +11,8 @@ class UserModel {
     /**
      * Créer un nouvel utilisateur
      */
-    public function createUser(...$data) {
+    public function create($data = []) {  
+     
         $sql = "INSERT INTO users (nom, prenom, email, password, statut, created_at, updated_at) 
                 VALUES (:nom, :prenom, :email, :password, :statut, NOW(), NOW())";
         
@@ -19,7 +20,7 @@ class UserModel {
             ':nom' => $data['nom'],
             ':prenom' => $data['prenom'],
             ':email' => $data['email'],
-            ':password' => $data['password'],
+            ':password' =>  password_hash($data['password'],PASSWORD_DEFAULT),
             ':statut' => $data['statut'] ?? 'actif'
         ];
         

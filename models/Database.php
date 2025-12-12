@@ -51,6 +51,7 @@ class Database {
      * Exécuter une requête avec paramètres (SELECT, INSERT, UPDATE, DELETE)
      */
     public function query($sql, $params = []) {
+        $this->connect();
         $stmt = $this->conn->prepare($sql);
         $stmt->execute($params);
         return $stmt;
