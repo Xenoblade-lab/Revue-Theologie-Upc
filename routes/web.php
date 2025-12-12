@@ -98,10 +98,16 @@ Router\Router::get('/reviewer/profil', [\Controllers\ReviewerController::class, 
 // ======== Routes ArticleModel ========
 Router\Router::get('/articles', function () {
     $db = getDb();
+<<<<<<< HEAD
     $model = new BlogModel($db);
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 20;
     respond($model->getAllArtices($page, $limit));
+=======
+    $model = new  BlogModel($db);
+    
+    respond($model->all());
+>>>>>>> 7467a147f83b50f0c745e5f6868692e5556d41dc
 });
 // =======
 // ======== Routes BlogModel ========
@@ -224,7 +230,7 @@ Router\Router::get('/admin/users/[i:id]', function ($params) {
 Router\Router::post('/admin/users', function () {
     $db = getDb();
     $model = new UserModel($db);
-    $model->createUser(input());
+    $model->create(input());
     respond(['message' => 'Utilisateur créé'], 201);
 });
 

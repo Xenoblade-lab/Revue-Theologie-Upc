@@ -1,12 +1,12 @@
 <?php
-<<<<<<< HEAD
+
 namespace Controllers;
 
 use Models\Database;
 use Models\UserModel;
-use Models\ArticleModel;
+use Models\BlogModel;
 
-class AdminController extends Controller
+class AdminController extends UserController
 {
     private function requireAdmin()
     {
@@ -25,7 +25,7 @@ class AdminController extends Controller
         $userId = $this->requireAdmin();
         $db = $this->db();
         $userModel = new UserModel($db);
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
 
         $user = $userModel->getUserById($userId);
 
@@ -108,17 +108,15 @@ class AdminController extends Controller
             'current_page' => 'settings'
         ]);
     }
-}
-
-=======
-  namespace Controllers;
-
-  class AdminController extends UserController
-  {
-      public function delete(array $params = [])
+          public function delete(array $params = [])
       {
         return parent::delete($params);
       }
-  }
+}
+
+
+
+
+
 ?>
->>>>>>> 1a9ccc2c006b448c9a91bc5473440c07f16b232c
+
