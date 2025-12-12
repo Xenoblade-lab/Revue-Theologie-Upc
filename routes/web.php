@@ -78,6 +78,11 @@ Router\Router::get('/test', function () {
 
 });
 
+Router\Router::post('/logout',function(){
+    $auth = new \Service\AuthService();
+    $auth->logout();
+});
+
 Router\Router::get('/admin', [\Controllers\AdminController::class, 'index']);
 Router\Router::get('/admin/users', [\Controllers\AdminController::class, 'users']);
 Router\Router::get('/admin/volumes', [\Controllers\AdminController::class, 'volumes']);
@@ -102,9 +107,7 @@ Router\Router::get('/articles', function () {
     
     respond($model->all());
 });
-// =======
-// ======== Routes BlogModel ========
-// >>>>>>> 1a9ccc2c006b448c9a91bc5473440c07f16b232c
+
 
 Router\Router::get('/articles/[i:id]', function ($params) {
     $db = getDb();

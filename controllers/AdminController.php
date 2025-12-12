@@ -100,7 +100,7 @@ class AdminController extends UserController
             'current_page' => 'paiements'
         ]);
     }
-
+    
     public function settings()
     {
         $this->requireAdmin();
@@ -108,15 +108,9 @@ class AdminController extends UserController
             'current_page' => 'settings'
         ]);
     }
-          public function delete(array $params = [])
+    public function delete(array $params = [])
       {
         return parent::delete($params);
       }
 }
-
-
-
-
-
 ?>
-
