@@ -81,10 +81,10 @@ Router\Router::get('/test', function () {
 Router\Router::get('/admin', function () {
     App\App::view('admin' . DIRECTORY_SEPARATOR . 'index');
 });
-Router\Router::get('/author', function () {
-    // Service\AuthService::requireLogin();
-    App\App::view('author' . DIRECTORY_SEPARATOR . 'index');
-});
+Router\Router::get('/author', [\Controllers\AuthorController::class, 'index']);
+Router\Router::get('/author/articles', [\Controllers\AuthorController::class, 'articles']);
+Router\Router::get('/author/abonnement', [\Controllers\AuthorController::class, 'abonnement']);
+Router\Router::get('/author/profil', [\Controllers\AuthorController::class, 'profil']);
 
 // ======== Routes BlogModel ========
 Router\Router::get('/articles', function () {
