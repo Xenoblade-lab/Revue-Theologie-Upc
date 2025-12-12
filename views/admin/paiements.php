@@ -43,7 +43,7 @@
                                     <td><?= htmlspecialchars(($p['prenom'] ?? '') . ' ' . ($p['nom'] ?? '')) ?></td>
                                     <td><?= htmlspecialchars($p['email'] ?? '') ?></td>
                                     <td><?= number_format($p['montant'] ?? 0, 2, ',', ' ') ?> $</td>
-                                    <td><span class="status-badge <?= ($p['statut'] ?? '') === 'valide' ? 'published' : (($p['statut'] ?? '') === 'refuse' ? 'rejected' : 'pending') ?>"><?= htmlspecialchars($p['statut'] ?? '') ?></span></td>
+                                    <td><?= statusBadge($p['statut'] ?? '', 'paiement') ?></td>
                                     <td><?= !empty($p['date_paiement']) ? date('d M Y', strtotime($p['date_paiement'])) : '—' ?></td>
                                 </tr>
                             <?php endforeach; ?>

@@ -41,7 +41,7 @@
                                     <td><?= htmlspecialchars($u['id']) ?></td>
                                     <td><?= htmlspecialchars(($u['prenom'] ?? '') . ' ' . ($u['nom'] ?? '')) ?></td>
                                     <td><?= htmlspecialchars($u['email']) ?></td>
-                                    <td><span class="status-badge <?= ($u['statut'] ?? '') === 'actif' ? 'published' : 'rejected' ?>"><?= htmlspecialchars($u['statut'] ?? '') ?></span></td>
+                                    <td><?= statusBadge($u['statut'] ?? '', 'user') ?></td>
                                     <td><?= !empty($u['created_at']) ? date('d M Y', strtotime($u['created_at'])) : '—' ?></td>
                                 </tr>
                             <?php endforeach; ?>

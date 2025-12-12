@@ -78,11 +78,6 @@ Router\Router::get('/test', function () {
 
 });
 
-Router\Router::post('/logout',function(){
-    $auth = new \Service\AuthService();
-    $auth->logout();
-});
-
 Router\Router::get('/admin', [\Controllers\AdminController::class, 'index']);
 Router\Router::get('/admin/users', [\Controllers\AdminController::class, 'users']);
 Router\Router::get('/admin/volumes', [\Controllers\AdminController::class, 'volumes']);
@@ -93,21 +88,20 @@ Router\Router::get('/author/articles', [\Controllers\AuthorController::class, 'a
 Router\Router::get('/author/abonnement', [\Controllers\AuthorController::class, 'abonnement']);
 Router\Router::get('/author/profil', [\Controllers\AuthorController::class, 'profil']);
 
-// <<<<<<< HEAD
 // ======== Reviewer Dashboard ========
 Router\Router::get('/reviewer', [\Controllers\ReviewerController::class, 'index']);
 Router\Router::get('/reviewer/terminees', [\Controllers\ReviewerController::class, 'terminees']);
 Router\Router::get('/reviewer/historique', [\Controllers\ReviewerController::class, 'historique']);
 Router\Router::get('/reviewer/profil', [\Controllers\ReviewerController::class, 'profil']);
 
-// ======== Routes ArticleModel ========
+// ======== Routes BlogModel ========
 Router\Router::get('/articles', function () {
     $db = getDb();
-    $model = new  BlogModel($db);
-    
-    respond($model->all());
+    $model = new BlogModel($db);
+    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 20;
+    respond($model->getAllArtices($page, $limit));
 });
-
 
 Router\Router::get('/articles/[i:id]', function ($params) {
     $db = getDb();
@@ -226,7 +220,7 @@ Router\Router::get('/admin/users/[i:id]', function ($params) {
 Router\Router::post('/admin/users', function () {
     $db = getDb();
     $model = new UserModel($db);
-    $model->create(input());
+    $model->createUser(input());
     respond(['message' => 'Utilisateur créé'], 201);
 });
 

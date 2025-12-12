@@ -5,7 +5,7 @@
 
   class AuthService extends Controller
   {
-    public function sign(array $datas = [], array $fields = ['nom', 'prenom', 'email', 'password', 'confirm-password','institution'])
+    public function sign(array $datas = [], array $fields = ['nom', 'prenom', 'email', 'password', 'confirm-password'])
     {
       $user = new \Models\UserModel(new \Models\Database());
       if (!$this->isNotEmpty($datas) || !$this->verifyFields($datas, $fields)) {
@@ -20,9 +20,10 @@
       if (
           !$this->valideLength($datas['nom'], 6, 64) ||
           !$this->valideLength($datas['prenom'], 6, 64) ||
-          !$this->valideLength($datas['institution'], 3, 64) ||
+          !$this->valideLength($datas['institution'], 6, 64) ||
           !$this->valideLength($datas['email'], 6, 64) ||
           !$this->valideLength($datas['password'], 6, 64)  ||
+          !$this->valideLength($datas['phone'], 6, 64)  ||
           !$this->valideLength($datas['confirm-password'], 6, 64) 
       ) {
           $this->jsonResponse([
@@ -50,7 +51,7 @@
         return;
      }
 
-     if($user->getUserByEmail($datas['email']))
+     if($user->getUserByEmail($datas['mails']))
      {
         // arrete tout si l utilisateur existe
         $this->jsonResponse([
@@ -62,8 +63,8 @@
 
   
     // Si tout est valide, tu peux continuer ici (ex: insertion en base)
-     
-     $user->create($datas);
+  
+     $user->createUser($user,$datas['nom'],$datas['prenom'],$datas['institution'],$datas['email'],password_hash($datas['password'],PASSWORD_DEFAULT) ,3,'');
 
      $this->jsonResponse([
          'status' => 200,
@@ -140,14 +141,11 @@
                 $_SESSION['user_role'] = $role;
                 $_SESSION['panier'] = [];
 
-                header("Location: ".\Router\Router::route(''));
-                
                 $this->jsonResponse([
                     'status' => 200,
                     'message' => 'Connexion réussie',
+                    'redirect' => \Router\Router::route('')
                 ]);
-            
-          
                 return;
             }
         }
@@ -157,7 +155,6 @@
             'status' => 401,
             'message' => 'Email ou mot de passe incorrect'
         ]);
-        header("Location: ". \Router\Router::route('login'));
     }
     
 

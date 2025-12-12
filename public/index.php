@@ -5,6 +5,7 @@
       }
       
       require dirname(__DIR__) . DIRECTORY_SEPARATOR .'vendor' . DIRECTORY_SEPARATOR .'autoload.php';
+      require_once dirname(__DIR__) . DIRECTORY_SEPARATOR .'helpers'. DIRECTORY_SEPARATOR .'status-badge.php';
       require_once dirname(__DIR__) . DIRECTORY_SEPARATOR .'routes'. DIRECTORY_SEPARATOR .'web.php';
       require_once dirname(__DIR__) . DIRECTORY_SEPARATOR .'routes'. DIRECTORY_SEPARATOR .'api.php';
 
@@ -16,7 +17,7 @@
       $db->connect();
       
       $origin = isset($_SERVER['BASE_URI']) ? $_SERVER['BASE_URI'] : '';
-    //   Router\Router::$defaultUri= "http://localhost/Revue-Theologie-Upc/public/";
+      Router\Router::$defaultUri= "http://localhost/Revue-Theologie-Upc/public/";
       Router\Router::origin($origin);
       Router\Router::matcher();
 ?>

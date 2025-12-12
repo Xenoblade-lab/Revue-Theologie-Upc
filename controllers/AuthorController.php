@@ -26,7 +26,6 @@ class AuthorController extends Controller
         
         // Récupérer les informations de l'utilisateur
         $user = $userModel->getUserById($userId);
-      
         if (!$user) {
             header('Location: ' . \Router\Router::route('login'));
             exit;
@@ -46,7 +45,7 @@ class AuthorController extends Controller
         ];
         
         foreach ($allArticles as $article) {
-            $statut = strtolower($article->statut ?? 'soumis');
+            $statut = strtolower($article['statut'] ?? '');
             switch ($statut) {
                 case 'soumis':
                     $stats['soumis']++;
@@ -77,11 +76,11 @@ class AuthorController extends Controller
         // Formater les articles pour l'affichage
         $articles = array_map(function($article) {
             return [
-                'id' => $article->id,
-                'titre' => $article->titre ?? 'Sans titre',
-                'date_soumission' => $article->date_soumission ?? $article->created_at ?? date('Y-m-d'),
-                'statut' => $article->statut ?? 'soumis',
-                'statut_display' => $this->formatStatut($article->statut ?? 'soumis')
+                'id' => $article['id'],
+                'titre' => $article['titre'] ?? 'Sans titre',
+                'date_soumission' => $article['date_soumission'] ?? $article['created_at'] ?? date('Y-m-d'),
+                'statut' => $article['statut'] ?? 'soumis',
+                'statut_display' => $this->formatStatut($article['statut'] ?? 'soumis')
             ];
         }, array_slice($allArticles, 0, 10)); // Limiter à 10 pour l'affichage
         
@@ -93,7 +92,7 @@ class AuthorController extends Controller
             'total_articles' => $stats['total']
         ];
         
-        \App\App::view('author' . DIRECTORY_SEPARATOR . 'index',['user' => $user, 'articles' => $articles, 'stats' => $stats, 'total_articles' => $stats['total']]);
+        \App\App::view('author' . DIRECTORY_SEPARATOR . 'index');
     }
     
     /**

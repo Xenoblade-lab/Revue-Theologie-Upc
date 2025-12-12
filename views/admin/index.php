@@ -98,17 +98,11 @@
                         <tbody>
                             <?php if (!empty($recentSubmissions)): ?>
                                 <?php foreach ($recentSubmissions as $sub): ?>
-                                    <?php
-                                        $statut = strtolower($sub['statut'] ?? '');
-                                        $badge = 'pending';
-                                        if (strpos($statut, 'valide') !== false || strpos($statut, 'publ') !== false) $badge = 'published';
-                                        if (strpos($statut, 'rej') !== false) $badge = 'rejected';
-                                    ?>
                                     <tr>
                                         <td><?= htmlspecialchars($sub['titre']) ?></td>
                                         <td><?= htmlspecialchars(($sub['prenom'] ?? '') . ' ' . ($sub['nom'] ?? '')) ?></td>
                                         <td><?= !empty($sub['date_soumission']) ? date('d M Y', strtotime($sub['date_soumission'])) : '—' ?></td>
-                                        <td><span class="status-badge <?= $badge ?>"><?= htmlspecialchars($sub['statut']) ?></span></td>
+                                        <td><?= statusBadge($sub['statut'] ?? '', 'article') ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>

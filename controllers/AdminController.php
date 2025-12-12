@@ -1,12 +1,11 @@
 <?php
-
 namespace Controllers;
 
 use Models\Database;
 use Models\UserModel;
-use Models\BlogModel;
+use Models\ArticleModel;
 
-class AdminController extends UserController
+class AdminController extends Controller
 {
     private function requireAdmin()
     {
@@ -25,7 +24,7 @@ class AdminController extends UserController
         $userId = $this->requireAdmin();
         $db = $this->db();
         $userModel = new UserModel($db);
-        $articleModel = new BlogModel($db);
+        $articleModel = new ArticleModel($db);
 
         $user = $userModel->getUserById($userId);
 
@@ -100,7 +99,7 @@ class AdminController extends UserController
             'current_page' => 'paiements'
         ]);
     }
-    
+
     public function settings()
     {
         $this->requireAdmin();
@@ -108,9 +107,4 @@ class AdminController extends UserController
             'current_page' => 'settings'
         ]);
     }
-    public function delete(array $params = [])
-      {
-        return parent::delete($params);
-      }
 }
-?>
