@@ -140,11 +140,14 @@
                 $_SESSION['user_role'] = $role;
                 $_SESSION['panier'] = [];
 
+                header("Location: ".\Router\Router::route(''));
+                
                 $this->jsonResponse([
                     'status' => 200,
                     'message' => 'Connexion réussie',
-                    'redirect' => \Router\Router::route('')
                 ]);
+            
+          
                 return;
             }
         }
@@ -154,6 +157,7 @@
             'status' => 401,
             'message' => 'Email ou mot de passe incorrect'
         ]);
+        header("Location: ". \Router\Router::route('login'));
     }
     
 
