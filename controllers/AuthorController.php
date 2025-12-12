@@ -3,7 +3,7 @@ namespace Controllers;
 
 use Models\Database;
 use Models\UserModel;
-use Models\ArticleModel;
+use Models\BlogModel;
 
 class AuthorController extends Controller
 {
@@ -22,7 +22,7 @@ class AuthorController extends Controller
         
         $db = $this->db();
         $userModel = new UserModel($db);
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
         
         // Récupérer les informations de l'utilisateur
         $user = $userModel->getUserById($userId);
@@ -110,7 +110,7 @@ class AuthorController extends Controller
         
         $db = $this->db();
         $userModel = new UserModel($db);
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
         
         // Récupérer les informations de l'utilisateur
         $user = $userModel->getUserById($userId);
@@ -238,6 +238,239 @@ class AuthorController extends Controller
     }
     
     /**
+     * Affiche les détails d'un article
+     */
+    public function articleDetails($params = [])
+    {
+        \Service\AuthService::requireLogin();
+        
+        $userId = $_SESSION['user_id'] ?? null;
+        if (!$userId) {
+            header('Location: ' . \Router\Router::route('login'));
+            exit;
+        }
+        
+        $articleId = is_array($params) ? ($params['id'] ?? null) : $params;
+        if (!$articleId) {
+            header('Location: ' . \Router\Router::route('author'));
+            exit;
+        }
+        
+        $db = $this->db();
+        $articleModel = new ArticleModel($db);
+        
+        // Récupérer l'article
+        $article = $articleModel->getArticleById($articleId);
+        
+        // Vérifier que l'article appartient à l'utilisateur connecté
+        if (!$article || $article['auteur_id'] != $userId) {
+            header('Location: ' . \Router\Router::route('author'));
+            exit;
+        }
+        
+        $data = [
+            'article' => $article,
+            'user' => (new UserModel($db))->getUserById($userId)
+        ];
+        
+        \App\App::view('author' . DIRECTORY_SEPARATOR . 'article-details', $data);
+    }
+    
+    /**
+     * Affiche le formulaire d'édition d'un article
+     */
+    public function articleEdit($params = [])
+    {
+        \Service\AuthService::requireLogin();
+        
+        $userId = $_SESSION['user_id'] ?? null;
+        if (!$userId) {
+            header('Location: ' . \Router\Router::route('login'));
+            exit;
+        }
+        
+        $articleId = is_array($params) ? ($params['id'] ?? null) : $params;
+        if (!$articleId) {
+            header('Location: ' . \Router\Router::route('author'));
+            exit;
+        }
+        
+        $db = $this->db();
+        $articleModel = new ArticleModel($db);
+        
+        // Récupérer l'article
+        $article = $articleModel->getArticleById($articleId);
+        
+        // Vérifier que l'article appartient à l'utilisateur connecté et qu'il peut être modifié
+        if (!$article || $article['auteur_id'] != $userId) {
+            header('Location: ' . \Router\Router::route('author'));
+            exit;
+        }
+        
+        // Vérifier que l'article peut être modifié (seulement si statut = soumis)
+        $statut = strtolower($article['statut'] ?? '');
+        if ($statut !== 'soumis') {
+            header('Location: ' . \Router\Router::route('author') . '/article/' . $articleId);
+            exit;
+        }
+        
+        $data = [
+            'article' => $article,
+            'user' => (new UserModel($db))->getUserById($userId)
+        ];
+        
+        \App\App::view('author' . DIRECTORY_SEPARATOR . 'article-edit', $data);
+    }
+    
+    /**
+     * Met à jour un article
+     */
+    public function articleUpdate($params = [])
+    {
+        \Service\AuthService::requireLogin();
+        
+        $userId = $_SESSION['user_id'] ?? null;
+        if (!$userId) {
+            $this->respond(['error' => 'Non autorisé'], 401);
+            return;
+        }
+        
+        $articleId = is_array($params) ? ($params['id'] ?? null) : $params;
+        if (!$articleId) {
+            $this->respond(['error' => 'ID d\'article manquant'], 400);
+            return;
+        }
+        
+        $db = $this->db();
+        $articleModel = new ArticleModel($db);
+        
+        // Récupérer l'article
+        $article = $articleModel->getArticleById($articleId);
+        
+        // Vérifier que l'article appartient à l'utilisateur connecté
+        if (!$article || $article['auteur_id'] != $userId) {
+            $this->respond(['error' => 'Article introuvable ou non autorisé'], 403);
+            return;
+        }
+        
+        // Vérifier que l'article peut être modifié
+        $statut = strtolower($article['statut'] ?? '');
+        if ($statut !== 'soumis') {
+            $this->respond(['error' => 'Cet article ne peut plus être modifié'], 400);
+            return;
+        }
+        
+        // Préparer les données de mise à jour
+        $updateData = [
+            'titre' => $_POST['titre'] ?? $article['titre'],
+            'contenu' => $_POST['contenu'] ?? $article['contenu']
+        ];
+        
+        // Gérer l'upload du fichier si un nouveau fichier est fourni
+        if (isset($_FILES['fichier']) && $_FILES['fichier']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'articles' . DIRECTORY_SEPARATOR;
+            
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+            
+            $file = $_FILES['fichier'];
+            $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $allowedExtensions = ['pdf', 'doc', 'docx', 'tex'];
+            
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                $this->respond(['error' => 'Format de fichier non autorisé. Formats acceptés : PDF, Word (.doc, .docx), LaTeX (.tex)'], 400);
+                return;
+            }
+            
+            // Supprimer l'ancien fichier s'il existe
+            if (!empty($article['fichier_path'])) {
+                $oldFilePath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $article['fichier_path'];
+                if (file_exists($oldFilePath)) {
+                    @unlink($oldFilePath);
+                }
+            }
+            
+            // Générer un nom de fichier unique
+            $fileName = uniqid('article_', true) . '_' . time() . '.' . $fileExtension;
+            $filePath = $uploadDir . $fileName;
+            
+            // Déplacer le fichier
+            if (move_uploaded_file($file['tmp_name'], $filePath)) {
+                $updateData['fichier_path'] = 'uploads/articles/' . $fileName;
+            } else {
+                $this->respond(['error' => 'Erreur lors de l\'upload du fichier'], 500);
+                return;
+            }
+        }
+        
+        // Mettre à jour l'article
+        $success = $articleModel->updateArticle($articleId, $updateData);
+        
+        if ($success) {
+            $this->respond(['success' => true, 'message' => 'Article modifié avec succès'], 200);
+        } else {
+            $this->respond(['error' => 'Erreur lors de la modification de l\'article'], 500);
+        }
+    }
+    
+    /**
+     * Supprime un article
+     */
+    public function articleDelete($params = [])
+    {
+        \Service\AuthService::requireLogin();
+        
+        $userId = $_SESSION['user_id'] ?? null;
+        if (!$userId) {
+            $this->respond(['error' => 'Non autorisé'], 401);
+            return;
+        }
+        
+        $articleId = is_array($params) ? ($params['id'] ?? null) : $params;
+        if (!$articleId) {
+            $this->respond(['error' => 'ID d\'article manquant'], 400);
+            return;
+        }
+        
+        $db = $this->db();
+        $articleModel = new ArticleModel($db);
+        
+        // Récupérer l'article
+        $article = $articleModel->getArticleById($articleId);
+        
+        // Vérifier que l'article appartient à l'utilisateur connecté
+        if (!$article || $article['auteur_id'] != $userId) {
+            $this->respond(['error' => 'Article introuvable ou non autorisé'], 403);
+            return;
+        }
+        
+        // Vérifier que l'article peut être supprimé (seulement si statut = soumis)
+        $statut = strtolower($article['statut'] ?? '');
+        if ($statut !== 'soumis') {
+            $this->respond(['error' => 'Cet article ne peut plus être supprimé'], 400);
+            return;
+        }
+        
+        // Supprimer le fichier associé s'il existe
+        if (!empty($article['fichier_path'])) {
+            $filePath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $article['fichier_path'];
+            if (file_exists($filePath)) {
+                @unlink($filePath);
+            }
+        }
+        
+        // Supprimer l'article
+        $success = $articleModel->deleteArticle($articleId);
+        
+        if ($success) {
+            $this->respond(['success' => true, 'message' => 'Article supprimé avec succès'], 200);
+        } else {
+            $this->respond(['error' => 'Erreur lors de la suppression de l\'article'], 500);
+        }
+    }
+    
+    /**
      * Formate le statut pour l'affichage
      */
     private function formatStatut($statut)
@@ -262,4 +495,3 @@ class AuthorController extends Controller
         return $statuts[$statut] ?? ucfirst($statut);
     }
 }
-

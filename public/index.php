@@ -12,6 +12,8 @@
       $whoops = new \Whoops\Run();
       $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
       $whoops->register();
+      $db = new \Models\Database();
+      $db->connect();
       
       $origin = isset($_SERVER['BASE_URI']) ? $_SERVER['BASE_URI'] : '';
       // Router\Router::$defaultUri= "http://localhost/Revue-Theologie-Upc/public/";

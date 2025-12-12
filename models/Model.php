@@ -1,9 +1,9 @@
 <?php
   namespace Models;
-  class Model{
+  class Model extends Database{
     protected $table = "model";
     public function all(){
-        "SELECT * FROM {$this->table}";
+      
     }
   }
 ?>

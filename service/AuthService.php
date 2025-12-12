@@ -7,7 +7,7 @@
   {
     public function sign(array $datas = [], array $fields = ['nom', 'prenom', 'email', 'password', 'confirm-password'])
     {
-       $user = new \Models\UserModel(new \Models\Database());
+      $user = new \Models\UserModel(new \Models\Database());
       if (!$this->isNotEmpty($datas) || !$this->verifyFields($datas, $fields)) {
            $this->jsonResponse([
               'status' => 400,

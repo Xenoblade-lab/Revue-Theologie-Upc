@@ -1,5 +1,6 @@
 <?php
-use Models\ArticleModel;
+
+use Models\BlogModel;
 use Models\Database;
 use Models\IssueModel;
 use Models\JournalModel;
@@ -81,46 +82,42 @@ Router\Router::get('/admin', function () {
     App\App::view('admin' . DIRECTORY_SEPARATOR . 'index');
 });
 Router\Router::get('/author', function () {
-    Service\AuthService::requireLogin();
+    // Service\AuthService::requireLogin();
     App\App::view('author' . DIRECTORY_SEPARATOR . 'index');
 });
 
-// ======== Routes ArticleModel ========
+// ======== Routes BlogModel ========
 Router\Router::get('/articles', function () {
     $db = getDb();
-    $model = new ArticleModel($db);
-
+    $model = new BlogModel($db);
     respond($model->all());
 });
 
 Router\Router::get('/articles/[i:id]', function ($params) {
     $db = getDb();
-    $model = new ArticleModel($db);
+    $model = new BlogModel($db);
     $article = $model->getArticleById($params['id']);
     $article ? respond($article) : respond(['message' => 'Article introuvable'], 404);
 });
 
 Router\Router::post('/articles', function () {
-    $db = getDb();
-    $model = new ArticleModel($db);
-    $data = $_POST;
-    $id = $model->createArticle($data);
-    // respond(['id' => $id], 201);
+    $blog = new \Controllers\BlogContoller();
+    $blog->create($_POST,$_FILES);
+
 });
 
 Router\Router::post('/articles/[i:id]/update', function ($params) {
     $db = getDb();
-    $model = new ArticleModel($db);
+    $model = new BlogModel($db);
     $data = input();
     $model->updateArticle($params['id'], $data);
     respond(['message' => 'Article mis à jour']);
 });
 
-Router\Router::post('/articles/[i:id]/delete', function ($params) {
-    $db = getDb();
-    $model = new ArticleModel($db);
-    $model->deleteArticle($params['id']);
-    respond(['message' => 'Article supprimé']);
+Router\Router::post('/articles/[i:id]/delete', function ($id) {
+    $blog = new \Controllers\BlogContoller();
+    $blog->delete($id);
+   
 });
 
 // ======== Routes JournalModel / VolumeModel ========
@@ -197,20 +194,20 @@ Router\Router::post('/issues/[i:id]/delete', function ($params) {
 });
 
 // ======== Routes UserModel ========
-Router\Router::get('/users', function () {
+Router\Router::get('/admin/users', function () {
     $db = getDb();
     $model = new UserModel($db);
     respond($model->all());
 });
 
-Router\Router::get('/users/[i:id]', function ($params) {
+Router\Router::get('/admin/users/[i:id]', function ($params) {
     $db = getDb();
     $model = new UserModel($db);
     $user = $model->getUserById($params['id']);
     $user ? respond($user) : respond(['message' => 'Utilisateur introuvable'], 404);
 });
 
-Router\Router::post('/users', function () {
+Router\Router::post('/admin/users', function () {
     $db = getDb();
     $model = new UserModel($db);
     $model->createUser(input());

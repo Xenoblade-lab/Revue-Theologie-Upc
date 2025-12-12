@@ -9,12 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<<<<<<< HEAD
-    <!-- Header -->
 
-    
-=======
->>>>>>> 35f15f3b08775dbcb4ca724abbbf584edfb77b4c
     <div class="dashboard-layout">
         <!-- Sidebar -->
         <aside class="dashboard-sidebar" id="sidebar">
@@ -369,7 +364,7 @@
                                 </svg>
                                 <p id="file-name-display">Glissez-déposez votre fichier ici ou</p>
                                 <span>Parcourir</span>
-                                <input type="file" name="fichier" id="fichier-input" required accept=".pdf,.doc,.docx,.tex">
+                                <input type="file" name="doc" id="fichier-input" required accept=".pdf,.doc,.docx,.tex">
                             </div>
                         </div>
                     </div>
@@ -391,8 +386,9 @@
     </button>
 
     <script src="<?= Router\Router::$defaultUri ?>js/script.js"></script>
-    <script src="<?= Router\Router::$defaultUri ?>js/dashboard-script.js"></script>
-    <script src="<?= Router\Router::$defaultUri ?>js/user-dropdown.js"></script>
+    <!-- <script src="<?= Router\Router::$defaultUri ?>js/dashboard-script.js"></script> -->
+   <script src="<?= Router\Router::$defaultUri ?>js/user-dropdown.js"></script>
+    <!-- 
     <script>
         // Gérer l'affichage du nom du fichier
         document.getElementById('fichier-input')?.addEventListener('change', function(e) {
@@ -449,6 +445,6 @@
                 submitBtn.textContent = originalText;
             });
         });
-    </script>
+    </script> -->
 </body>
 </html>

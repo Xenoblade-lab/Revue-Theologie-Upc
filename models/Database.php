@@ -6,7 +6,7 @@ class Database {
     private $username;       // utilisateur MySQL
     private $password;           // mot de passe MySQL
     private $port;               // port MySQL
-    private $conn;                    // objet PDO
+    protected $conn;                    // objet PDO
     private $config = []; 
 
  

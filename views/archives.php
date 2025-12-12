@@ -71,7 +71,7 @@
             </div>
 
             <!-- 2024 Issues -->
-            <div class="year-content" data-year="2024">
+            <div class="year-content " data-year="2024">
                 <div class="issues-grid">
                     <div class="issue-card fade-up">
                         <div class="issue-cover-small">
