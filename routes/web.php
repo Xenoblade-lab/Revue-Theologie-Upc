@@ -58,6 +58,10 @@ Router\Router::get('/instructions', function () {
 });
 
 Router\Router::get('/login', function () {
+    $auth = new \Service\AuthService();
+    if($auth->isLoggedIn()){
+        header("Location: ". \Router\Router::route(''));
+    }
     App\App::view('login');
 });
 

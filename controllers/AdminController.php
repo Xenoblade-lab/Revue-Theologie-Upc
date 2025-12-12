@@ -32,7 +32,7 @@ class AdminController extends UserController
         // Stats
         $articlesTotal = $db->fetchOne("SELECT COUNT(*) as c FROM articles")['c'] ?? 0;
         $articlesPublies = $db->fetchOne("SELECT COUNT(*) as c FROM articles WHERE statut IN ('valide','publie','publié')")['c'] ?? 0;
-        $evaluateursActifs = $db->fetchOne("SELECT COUNT(*) as c FROM users")['c'] ?? 0;
+        $utilisateurs = $db->fetchOne("SELECT COUNT(*) as c FROM users")['c'] ?? 0;
         $revenusMois = $db->fetchOne("SELECT COALESCE(SUM(montant),0) as total FROM paiements WHERE statut='valide' AND date_paiement IS NOT NULL AND MONTH(date_paiement)=MONTH(CURDATE()) AND YEAR(date_paiement)=YEAR(CURDATE())")['total'] ?? 0;
 
         $recentSubmissions = $db->fetchAll("
@@ -42,19 +42,20 @@ class AdminController extends UserController
             ORDER BY a.date_soumission DESC
             LIMIT 5
         ");
-
+   
         $data = [
             'user' => $user,
             'stats' => [
                 'articles_total' => $articlesTotal,
                 'articles_publies' => $articlesPublies,
-                'evaluateurs_actifs' => $evaluateursActifs,
+                'evaluateurs_actifs' => $utilisateurs,
                 'revenus_mois' => $revenusMois,
             ],
             'recentSubmissions' => $recentSubmissions,
             'current_page' => 'dashboard',
         ];
-
+     
+      
         \App\App::view('admin' . DIRECTORY_SEPARATOR . 'index', $data);
     }
 

@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="stat-value"><?= $stats['evaluateurs_actifs'] ?? 0 ?></div>
-                    <div class="stat-label">Utilisateurs / Évaluateurs</div>
+                    <div class="stat-label">Utilisateurs</div>
                 </div>
 
                 <div class="stat-card fade-up">
@@ -93,27 +93,25 @@
                                 <th>Auteur</th>
                                 <th>Date</th>
                                 <th>Statut</th>
+                           
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (!empty($recentSubmissions)): ?>
-                                <?php foreach ($recentSubmissions as $sub): ?>
-                                    <?php
-                                        $statut = strtolower($sub['statut'] ?? '');
-                                        $badge = 'pending';
-                                        if (strpos($statut, 'valide') !== false || strpos($statut, 'publ') !== false) $badge = 'published';
-                                        if (strpos($statut, 'rej') !== false) $badge = 'rejected';
-                                    ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($sub['titre']) ?></td>
-                                        <td><?= htmlspecialchars(($sub['prenom'] ?? '') . ' ' . ($sub['nom'] ?? '')) ?></td>
-                                        <td><?= !empty($sub['date_soumission']) ? date('d M Y', strtotime($sub['date_soumission'])) : '—' ?></td>
-                                        <td><span class="status-badge <?= $badge ?>"><?= htmlspecialchars($sub['statut']) ?></span></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr><td colspan="4" style="text-align:center; padding:1.5rem;">Aucune soumission récente.</td></tr>
-                            <?php endif; ?>
+                           
+                            <?php foreach($recentSubmissions as $recent): ?>
+                                <tr>
+                                    <td><?=htmlspecialchars($recent->titre) ?></td>
+                                    <td><?=htmlspecialchars(($recent->prenom ?? '') . ' ' . ($recent->nom ?? '')) ?></td>
+                                    <td><?=!empty($recent->date_soumission) ? date('d M Y', strtotime($recent->date_soumission)) : '—' ?></td>
+                                    <!-- published,rejected -->
+                                    <td><span class="status-badge <?='pending' ?>"><?= htmlspecialchars($recent->statut) ?></span></td>
+                                </tr>
+                         
+                                 
+                            <?php endforeach ?>
+                            <?php if(!count($recentSubmissions)): ?>
+                              <tr><td colspan="4" style="text-align:center; padding:1.5rem;">Aucune soumission récente.</td></tr>
+                            <?php endif?>
                         </tbody>
                     </table>
                 </div>
