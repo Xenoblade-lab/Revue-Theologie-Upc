@@ -12,83 +12,35 @@
     <div class="dashboard-layout">
         <!-- Sidebar -->
         <aside class="dashboard-sidebar" id="sidebar">
-            <nav class="sidebar-nav">
-                <div class="user-panel user-dropdown">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="<?= Router\Router::$defaultUri ?>assets/logo_upc.png" alt="UPC Logo">
+                    <h2>Espace Auteur</h2>
+                </div>
+                <div class="user-info">
                     <?php
                     // Récupérer les données utilisateur depuis les variables passées par le contrôleur
                     $userName = isset($user) ? trim(($user['prenom'] ?? '') . ' ' . ($user['nom'] ?? '')) : 'Utilisateur';
                     $userEmail = isset($user) ? ($user['email'] ?? '') : '';
                     $userInitials = isset($user) ? strtoupper(substr($user['prenom'] ?? '', 0, 1) . substr($user['nom'] ?? '', 0, 1)) : 'U';
                     ?>
-                    <button class="user-btn" id="userBtn" aria-label="Menu utilisateur">
-                        <div class="user-avatar">
-                            <?= htmlspecialchars($userInitials) ?>
-                        </div>
-                        <div class="user-details">
-                            <h3><?= htmlspecialchars($userName) ?></h3>
-                            <p><?= htmlspecialchars($userEmail) ?></p>
-                        </div>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="user-menu" id="userMenu">
-                        <div class="user-info">
-                            <div class="user-avatar-large"><?= htmlspecialchars($userInitials) ?></div>
-                            <div class="user-details">
-                                <div class="user-name-full"><?= htmlspecialchars($userName) ?></div>
-                                <div class="user-email"><?= htmlspecialchars($userEmail) ?></div>
-                            </div>
-                        </div>
-                        <div class="user-menu-divider"></div>
-                        <a href="<?= Router\Router::route("author") ?>" class="user-menu-item">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                            </svg>
-                            Tableau de bord
-                        </a>
-                        <a href="<?= Router\Router::route("author") ?>" class="user-menu-item">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                            Mon profil
-                        </a>
-                        <a href="<?= Router\Router::route("submit") ?>" class="user-menu-item">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                            Soumettre un article
-                        </a>
-                        <a href="<?= Router\Router::route("instructions") ?>" class="user-menu-item">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            Instructions
-                        </a>
-                        <div class="user-menu-divider"></div>
-                        <a href="<?= Router\Router::route("logout") ?>" class="user-menu-item logout-item" id="logoutBtn">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                                <polyline points="16 17 21 12 16 7"></polyline>
-                                <line x1="21" y1="12" x2="9" y2="12"></line>
-                            </svg>
-                            Se déconnecter
-                        </a>
+                    <div class="user-avatar"><?= htmlspecialchars($userInitials) ?></div>
+                    <div class="user-details">
+                        <h3><?= htmlspecialchars($userName) ?></h3>
+                        <p>Auteur</p>
                     </div>
                 </div>
+            </div>
 
+            <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Principal</div>
-                    <div class="nav-item active">
+                    <a href="<?= Router\Router::route("author") ?>" class="nav-item active">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
                         <span>Tableau de bord</span>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="nav-section">
@@ -398,7 +350,6 @@
 
     <script src="<?= Router\Router::$defaultUri ?>js/script.js"></script>
     <script src="<?= Router\Router::$defaultUri ?>js/dashboard-script.js"></script>
-    <script src="<?= Router\Router::$defaultUri ?>js/user-dropdown.js"></script>
     <script>
         // Gérer l'affichage du nom du fichier
         document.getElementById('fichier-input')?.addEventListener('change', function(e) {
