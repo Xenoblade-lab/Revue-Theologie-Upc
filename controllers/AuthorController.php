@@ -156,7 +156,7 @@ class AuthorController extends Controller
         
         $db = $this->db();
         $userModel = new UserModel($db);
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
         
         // Récupérer les informations de l'utilisateur
         $user = $userModel->getUserById($userId);
@@ -206,7 +206,7 @@ class AuthorController extends Controller
         
         $db = $this->db();
         $userModel = new UserModel($db);
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
         
         // Récupérer les informations de l'utilisateur
         $user = $userModel->getUserById($userId);
@@ -257,7 +257,7 @@ class AuthorController extends Controller
         }
         
         $db = $this->db();
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
         
         // Récupérer l'article
         $article = $articleModel->getArticleById($articleId);
@@ -296,7 +296,7 @@ class AuthorController extends Controller
         }
         
         $db = $this->db();
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
         
         // Récupérer l'article
         $article = $articleModel->getArticleById($articleId);
@@ -342,7 +342,7 @@ class AuthorController extends Controller
         }
         
         $db = $this->db();
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
         
         // Récupérer l'article
         $article = $articleModel->getArticleById($articleId);
@@ -434,7 +434,7 @@ class AuthorController extends Controller
         }
         
         $db = $this->db();
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
         
         // Récupérer l'article
         $article = $articleModel->getArticleById($articleId);
@@ -461,7 +461,8 @@ class AuthorController extends Controller
         }
         
         // Supprimer l'article
-        $success = $articleModel->deleteArticle($articleId);
+        $articleModel->delete($articleId);
+        $success = true;
         
         if ($success) {
             $this->respond(['success' => true, 'message' => 'Article supprimé avec succès'], 200);

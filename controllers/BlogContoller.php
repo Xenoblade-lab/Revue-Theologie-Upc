@@ -41,7 +41,7 @@ class BlogContoller extends Controller
           }
        }
        $model->create($datas);
-       header("Location :" . \Router\Router::route('author'));
+       header("Location: " . \Router\Router::route('author'));
      
     }
     

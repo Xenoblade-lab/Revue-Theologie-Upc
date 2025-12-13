@@ -20,7 +20,7 @@ class BlogModel extends Model {
             ':titre' => $data['titre'],
             ':contenu' => $data['contenu'],
             ':fichier_path' => $data['fichier_path'] ?? null,
-            ':auteur_id' => rand(1,9),
+            ':auteur_id' => $data['auteur_id'] ?? null,
             ':statut' => $data['statut'] ?? 'soumis'
         ];
         $this->db->execute($sql, $params);

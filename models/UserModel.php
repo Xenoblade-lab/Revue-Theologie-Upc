@@ -11,19 +11,20 @@ class UserModel {
     /**
      * Créer un nouvel utilisateur
      */
-    public function createUser(...$data) {
+    public function createUser($data) {
         $sql = "INSERT INTO users (nom, prenom, email, password, statut, created_at, updated_at) 
                 VALUES (:nom, :prenom, :email, :password, :statut, NOW(), NOW())";
         
         $params = [
-            ':nom' => $data['nom'],
-            ':prenom' => $data['prenom'],
-            ':email' => $data['email'],
-            ':password' => $data['password'],
+            ':nom' => $data['nom'] ?? '',
+            ':prenom' => $data['prenom'] ?? '',
+            ':email' => $data['email'] ?? '',
+            ':password' => $data['password'] ?? '',
             ':statut' => $data['statut'] ?? 'actif'
         ];
         
-        return $this->db->connect()->prepare($sql)->execute($params);
+        $this->db->connect();
+        return $this->db->execute($sql, $params);
     }
 
     /**

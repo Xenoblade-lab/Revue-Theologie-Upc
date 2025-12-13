@@ -22,8 +22,8 @@ class ArticleController extends Controller
     public function store($data = [])
     {
         $model = new BlogModel($this->db());
-        $id = $model->create($data);
-        $this->respond(['id' => $id], 201);
+        $model->create($data);
+        $this->respond(['message' => 'Article créé avec succès'], 201);
     }
 
     public function update(array $params)
@@ -37,7 +37,7 @@ class ArticleController extends Controller
     public function delete(array $params)
     {
         $model = new BlogModel($this->db());
-        $model->deleteArticle($params['id'] ?? 0);
+        $model->delete($params['id'] ?? 0);
         $this->respond(['message' => 'Article supprimé']);
     }
 }

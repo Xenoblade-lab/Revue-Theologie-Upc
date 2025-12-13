@@ -104,7 +104,7 @@ Router\Router::get('/articles', function () {
     $model = new BlogModel($db);
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 20;
-    respond($model->getAllArtices($page, $limit));
+    respond($model->all());
 });
 
 Router\Router::get('/articles/[i:id]', function ($params) {

@@ -37,7 +37,6 @@ class Database {
         } catch (\PDOException $e) {
             die("Erreur de connexion : " . $e->getMessage());
         }
-        return $this->conn;
     }
 
     /**
@@ -63,7 +62,7 @@ class Database {
     #good
     public function fetchAll($sql, $params = []) {
         $stmt = $this->query($sql, $params);
-        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     // /**

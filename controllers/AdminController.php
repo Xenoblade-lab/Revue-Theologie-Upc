@@ -3,7 +3,7 @@ namespace Controllers;
 
 use Models\Database;
 use Models\UserModel;
-use Models\ArticleModel;
+use Models\BlogModel;
 
 class AdminController extends Controller
 {
@@ -24,7 +24,7 @@ class AdminController extends Controller
         $userId = $this->requireAdmin();
         $db = $this->db();
         $userModel = new UserModel($db);
-        $articleModel = new ArticleModel($db);
+        $articleModel = new BlogModel($db);
 
         $user = $userModel->getUserById($userId);
 
@@ -107,5 +107,38 @@ class AdminController extends Controller
         \App\App::view('admin' . DIRECTORY_SEPARATOR . 'settings', [
             'current_page' => 'settings'
         ]);
+    }
+
+    public function delete(array $params = [])
+    {
+        $this->requireAdmin();
+        $db = $this->db();
+        $userModel = new UserModel($db);
+        
+        $userId = $params['id'] ?? null;
+        
+        if (!$userId) {
+            http_response_code(400);
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'ID utilisateur manquant']);
+            exit;
+        }
+        
+        // Vérifier que l'utilisateur existe
+        $user = $userModel->getUserById($userId);
+        if (!$user) {
+            http_response_code(404);
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'Utilisateur introuvable']);
+            exit;
+        }
+        
+        // Supprimer l'utilisateur
+        $userModel->delete($userId);
+        
+        http_response_code(200);
+        header('Content-Type: application/json');
+        echo json_encode(['message' => 'Utilisateur supprimé avec succès']);
+        exit;
     }
 }
